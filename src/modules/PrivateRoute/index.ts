@@ -1,0 +1,1 @@
+export { PrivateChild } from "./PrivateChild";

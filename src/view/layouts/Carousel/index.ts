@@ -1,0 +1,1 @@
+export { CarouselFunc } from "./CarouselFunc";
