@@ -1,0 +1,1 @@
+export { PrevFooter } from "./PrevFooter";

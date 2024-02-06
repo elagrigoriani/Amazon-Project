@@ -7,6 +7,8 @@ import { Routes, Route } from "react-router-dom";
 import { PrivateChild } from "./modules/PrivateRoute";
 import { Navigation } from "./view/layouts/Navigation";
 import { CarouselFunc } from "./view/layouts/Carousel";
+import { PrevFooter } from "./view/layouts/Footer/PrevFooter";
+import { Footer } from "./view/layouts/Footer/Footer";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
       </Routes>
       <Navigation />
       <CarouselFunc />
+      <PrevFooter />
+      <Footer />
     </>
   );
 }
