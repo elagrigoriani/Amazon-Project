@@ -12,19 +12,11 @@ export function Navigation() {
   useEffect(() => {
     getCategories();
   }, []);
-  console.log(categories);
   return (
     <SNav>
-      {/* {categories.map((category: any) => {
+      {categories.map((category: any) => {
         return <a href="#">{category.name}</a>;
-      })} */}
-      <a href="#">სმარტფონები</a>
-      <a href="#">ლეპტოპები</a>
-      <a href="#">აუდიო</a>
-      <a href="#">ფოტო | ვიდეო</a>
-      <a href="#">გეიმინგი</a>
-      <a href="#">TV | მონიტორები</a>
-      <a href="#">ტაბები</a>
+      })}
     </SNav>
   );
 }

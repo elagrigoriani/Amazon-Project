@@ -1,0 +1,1 @@
+export { Smartphone } from "./Smartphone";
