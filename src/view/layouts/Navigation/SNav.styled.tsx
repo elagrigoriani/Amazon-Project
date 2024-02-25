@@ -6,15 +6,17 @@ export const SNav = styled.div`
   width: 100%;
   padding: 8px;
   background-color: #252f3d;
+`;
 
-  a {
-    padding: 9px;
-    border-radius: 3px;
-    border: 1px solid #252f3d;
-    text-decoration: none;
-    color: #ffffff;
-  }
-  & a:hover {
+export const SCat = styled.div`
+  padding: 9px;
+  border-radius: 3px;
+  border: 1px solid #252f3d;
+  text-decoration: none;
+  color: #ffffff;
+  cursor: pointer;
+
+  &:hover {
     border: 1px solid #ffffff;
   }
 `;
