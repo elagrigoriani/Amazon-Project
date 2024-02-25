@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IProducts } from "../../shared/types";
@@ -15,7 +14,7 @@ export function Smartphone() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
-  async function getProducts(categoryName) {
+  async function getProducts(categoryName: string) {
     try {
       const resp = await axios.get(
         `http://localhost:3000/product?categoryName=${encodeURIComponent(
