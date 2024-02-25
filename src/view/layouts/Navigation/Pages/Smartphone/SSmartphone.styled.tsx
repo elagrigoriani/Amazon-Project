@@ -89,8 +89,3 @@ export const PaginationNumber = styled.span`
     text-decoration: underline;
   }
 `;
-
-export const PaginationText = styled.span`
-  margin: 0 10px;
-  font-size: 16px;
-`;

@@ -8,7 +8,6 @@ import {
   PaginationWrapper,
   PaginationButton,
   PaginationNumber,
-  PaginationText,
 } from "./SSmartphone.styled";
 
 export function Smartphone() {
@@ -16,9 +15,13 @@ export function Smartphone() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
-  async function getProducts() {
+  async function getProducts(categoryName) {
     try {
-      const resp = await axios.get("http://localhost:3000/product?pageSize=25");
+      const resp = await axios.get(
+        `http://localhost:3000/product?categoryName=${encodeURIComponent(
+          categoryName
+        )}&pageSize=130`
+      );
       if (Array.isArray(resp.data.products)) {
         setProducts(resp.data.products);
       } else {
@@ -30,7 +33,7 @@ export function Smartphone() {
   }
 
   useEffect(() => {
-    getProducts();
+    getProducts("სმარტფონები");
   }, []);
 
   const totalPages = Math.ceil(products.length / itemsPerPage);
