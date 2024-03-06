@@ -12,6 +12,12 @@ export function CarouselFunc() {
       </SCarouselFunc>
       <SCarouselFunc>
         <img
+          src="https://m.media-amazon.com/images/I/61Pdr3h6MmL._SX3000_.jpg"
+          alt="img"
+        />
+      </SCarouselFunc>
+      <SCarouselFunc>
+        <img
           src="https://m.media-amazon.com/images/I/71NqG9bBp7L._SX3000_.jpg"
           alt="img"
         />

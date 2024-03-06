@@ -2,6 +2,7 @@ import { Avatar, Button, ConfigProvider, Space, Popover } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../images/logo.png";
+import cartImage from "../../../images/cart.png";
 
 import { SLayoutHeader } from "./SLayoutHeader.styled";
 
@@ -12,21 +13,36 @@ import { TAuthorizationStage_Enum } from "../../../provider/AuthProvider/AuthCon
 import { composeAvatarName } from "../../../utils/composeAvatarName";
 import { Search } from "../../Home/Search/Search";
 import { Navigation } from "../Navigation";
+import { CartModal } from "../../../components/CartModal";
+import { useCart } from "../../../hooks/useCart";
 
 export function LayoutHeader() {
   const { authStage, userData, logout } = useAuthProvider();
-
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const [showSignUp, setShowSignUp] = useState<boolean>(false);
   const [showSignIn, setShowSignIn] = useState<boolean>(false);
+  const { cartProducts, addToCart, removeFromCart } = useCart();
 
   return (
     <div>
       <SLayoutHeader>
-        <img src={Logo} alt="ლოგო" />
+        <a href="/">
+          <img src={Logo} alt="ლოგო" />
+        </a>
 
         <Search />
-
+        {show && (
+          <CartModal
+            cartProducts={cartProducts as any}
+            onCancel={() => setShow(false)}
+            addToCart={addToCart}
+            removeFromCart={removeFromCart}
+          />
+        )}
+        <button className="cart-button" onClick={() => setShow(true)}>
+          {<img src={cartImage} alt="img" />}
+        </button>
         <Space>
           {authStage === TAuthorizationStage_Enum.AUTHORIZED ? (
             <div>

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IProducts } from "../../shared/types";
+import { useCart } from "../../../../../hooks/useCart";
+
 import {
   SSmartphone,
   SWrapper,
@@ -12,6 +14,8 @@ import {
 export function Gaming() {
   const [products, setProducts] = useState<IProducts[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const { cartProducts, addToCart } = useCart();
+  console.log(cartProducts);
   const itemsPerPage = 12;
 
   async function getProducts(categoryName: string) {
@@ -67,7 +71,9 @@ export function Gaming() {
               <img src={product.image} alt={product.title} />
               <span>{product.price} ₾</span>
               <p>{product.description}</p>
-              <button>კალათაში დამატება</button>
+              <button onClick={() => addToCart(product.id)}>
+                კალათაში დამატება
+              </button>
             </SSmartphone>
           ))}
       </SWrapper>
