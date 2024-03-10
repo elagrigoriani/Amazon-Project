@@ -1,10 +1,24 @@
-import { Button, Card, Modal } from "antd";
+import { Button, Modal } from "antd";
+import { useEffect } from "react";
+import {
+  CartButtonsWrapper,
+  CartCount,
+  CartProductCount,
+  CartProductDesc,
+  CartProductImage,
+  CartProductInfo,
+  CartProductPrice,
+  CartProductRow,
+  CartProductTitle,
+} from "./CartModal.styled";
+import { ICartProduct } from "../view/layouts/Navigation/shared/types";
 
 type CartModalProp = {
   onCancel: () => void;
-  cartProducts: any[];
+  cartProducts: ICartProduct[];
   addToCart: (productId: string) => void;
   removeFromCart: (cartProductId: string, all: boolean) => void;
+  getCartProducts: () => void;
 };
 
 export function CartModal({
@@ -12,7 +26,12 @@ export function CartModal({
   cartProducts,
   addToCart,
   removeFromCart,
+  getCartProducts,
 }: CartModalProp) {
+  useEffect(() => {
+    getCartProducts();
+  }, []);
+
   return (
     <Modal
       open={true}
@@ -28,32 +47,58 @@ export function CartModal({
       }}
       cancelButtonProps={{
         style: {
-          backgroundColor: "#FF9900",
+          backgroundColor: "#fff",
           borderColor: "#FF9900",
-          color: "#fff",
+          color: "#FF9900",
         },
       }}
     >
-      {cartProducts?.map((product: any) => {
+      {cartProducts?.map((product: ICartProduct, index: number) => {
         return (
-          <Card
-            title={`${product.cartProduct.title} ${product.image} ${product.count} ცალი`}
-            extra={
-              <>
-                <Button onClick={() => removeFromCart(product.id, false)}>
-                  -
-                </Button>
-                <Button onClick={() => addToCart(product.cartProduct.id)}>
-                  +
-                </Button>
-                <Button onClick={() => removeFromCart(product.id, true)}>
-                  წაშლა
-                </Button>
-              </>
-            }
-          >
-            {product.descripion}
-          </Card>
+          <div>
+            <CartProductRow key={index}>
+              <CartProductInfo>
+                <CartProductImage>
+                  <img src={product.cartProduct.image} />
+                </CartProductImage>
+                <CartProductDesc>
+                  <CartProductTitle>
+                    {product.cartProduct.description}
+                  </CartProductTitle>
+                  <CartProductPrice>
+                    {product.cartProduct.price} <span> ₾ </span>
+                  </CartProductPrice>
+                  <CartButtonsWrapper>
+                    <Button
+                      style={{ marginRight: "5px" }}
+                      onClick={() => removeFromCart(product.id, false)}
+                    >
+                      -
+                    </Button>
+                    <CartCount>
+                      {product.count} <span> ცალი </span>
+                    </CartCount>
+                    <Button
+                      style={{ marginLeft: "5px", marginRight: "3px" }}
+                      onClick={() => addToCart(product.cartProduct.id)}
+                    >
+                      +
+                    </Button>
+                    <Button
+                      style={{
+                        backgroundColor: "#FF9900",
+                        color: "#fff",
+                        border: "1px solid #FF9900",
+                      }}
+                      onClick={() => removeFromCart(product.id, true)}
+                    >
+                      წაშლა
+                    </Button>
+                  </CartButtonsWrapper>
+                </CartProductDesc>
+              </CartProductInfo>
+            </CartProductRow>
+          </div>
         );
       })}
     </Modal>

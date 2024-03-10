@@ -22,7 +22,8 @@ export function LayoutHeader() {
   const navigate = useNavigate();
   const [showSignUp, setShowSignUp] = useState<boolean>(false);
   const [showSignIn, setShowSignIn] = useState<boolean>(false);
-  const { cartProducts, addToCart, removeFromCart } = useCart();
+  const { cartProducts, addToCart, removeFromCart, getCartProducts } =
+    useCart();
 
   return (
     <div>
@@ -38,6 +39,7 @@ export function LayoutHeader() {
             onCancel={() => setShow(false)}
             addToCart={addToCart}
             removeFromCart={removeFromCart}
+            getCartProducts={getCartProducts}
           />
         )}
         <button className="cart-button" onClick={() => setShow(true)}>

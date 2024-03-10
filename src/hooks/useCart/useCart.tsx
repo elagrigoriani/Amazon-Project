@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { privateAxios } from "../../utils/privateAxios";
-import axios from "axios";
 
 export function useCart() {
   const [cartProducts, setCartProducts] = useState();
@@ -16,19 +15,19 @@ export function useCart() {
         product_id: productId,
       });
       await getCartProducts();
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async function removeFromCart(cartProductId: string, all: boolean) {
     try {
       await privateAxios.delete(`/cart/${cartProductId}?removeAll=${all}`);
       await getCartProducts();
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
-
-  useEffect(() => {
-    getCartProducts();
-  }, []);
 
   return { cartProducts, getCartProducts, addToCart, removeFromCart };
 }

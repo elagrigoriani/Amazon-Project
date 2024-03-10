@@ -15,6 +15,7 @@ import { Tab } from "./view/layouts/Navigation/Pages/Tab";
 import { TV } from "./view/layouts/Navigation/Pages/TV";
 import { Gaming } from "./view/layouts/Navigation/Pages/Gaming";
 import { Audio } from "./view/layouts/Navigation/Pages/Audio";
+import { SearchResults } from "./view/Home/Search/SearchResults";
 
 function App() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function App() {
           <Route path="/გეიმინგი" element={<Gaming />} />
           <Route path="/TV | მონიტორები" element={<TV />} />
           <Route path="/ტაბები" element={<Tab />} />
+          <Route path="/" element={<SearchResults />} />
         </Route>
       </Routes>
 
