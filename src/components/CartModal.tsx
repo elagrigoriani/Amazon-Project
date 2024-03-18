@@ -1,9 +1,8 @@
+import React, { useEffect, useState } from "react";
 import { Button, Modal } from "antd";
-import { useEffect } from "react";
 import {
   CartButtonsWrapper,
   CartCount,
-  CartProductCount,
   CartProductDesc,
   CartProductImage,
   CartProductInfo,
@@ -28,9 +27,23 @@ export function CartModal({
   removeFromCart,
   getCartProducts,
 }: CartModalProp) {
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [totalItems, setTotalItems] = useState<number>(0);
+
   useEffect(() => {
     getCartProducts();
   }, []);
+
+  useEffect(() => {
+    let total = 0;
+    let items = 0;
+    cartProducts.forEach((product) => {
+      total += product.count * product.cartProduct.price;
+      items += product.count;
+    });
+    setTotalPrice(total);
+    setTotalItems(items);
+  }, [cartProducts]);
 
   return (
     <Modal
@@ -55,52 +68,65 @@ export function CartModal({
     >
       {cartProducts?.map((product: ICartProduct, index: number) => {
         return (
-          <div>
-            <CartProductRow key={index}>
-              <CartProductInfo>
-                <CartProductImage>
-                  <img src={product.cartProduct.image} />
-                </CartProductImage>
-                <CartProductDesc>
-                  <CartProductTitle>
-                    {product.cartProduct.description}
-                  </CartProductTitle>
-                  <CartProductPrice>
-                    {product.cartProduct.price} <span> ₾ </span>
-                  </CartProductPrice>
-                  <CartButtonsWrapper>
-                    <Button
-                      style={{ marginRight: "5px" }}
-                      onClick={() => removeFromCart(product.id, false)}
-                    >
-                      -
-                    </Button>
-                    <CartCount>
-                      {product.count} <span> ცალი </span>
-                    </CartCount>
-                    <Button
-                      style={{ marginLeft: "5px", marginRight: "3px" }}
-                      onClick={() => addToCart(product.cartProduct.id)}
-                    >
-                      +
-                    </Button>
-                    <Button
-                      style={{
-                        backgroundColor: "#FF9900",
-                        color: "#fff",
-                        border: "1px solid #FF9900",
-                      }}
-                      onClick={() => removeFromCart(product.id, true)}
-                    >
-                      წაშლა
-                    </Button>
-                  </CartButtonsWrapper>
-                </CartProductDesc>
-              </CartProductInfo>
-            </CartProductRow>
-          </div>
+          <CartProductRow key={index}>
+            <CartProductInfo>
+              <CartProductImage>
+                <img src={product.cartProduct.image} />
+              </CartProductImage>
+              <CartProductDesc>
+                <CartProductTitle>
+                  {product.cartProduct.description}
+                </CartProductTitle>
+                <CartProductPrice>
+                  {product.cartProduct.price} <span> ₾ </span>
+                </CartProductPrice>
+                <CartButtonsWrapper>
+                  <Button
+                    style={{ marginRight: "5px" }}
+                    onClick={() => removeFromCart(product.id, false)}
+                  >
+                    -
+                  </Button>
+                  <CartCount>
+                    {product.count} <span> ცალი </span>
+                  </CartCount>
+                  <Button
+                    style={{ marginLeft: "5px", marginRight: "3px" }}
+                    onClick={() => addToCart(product.cartProduct.id)}
+                  >
+                    +
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "#FF9900",
+                      color: "#fff",
+                      border: "1px solid #FF9900",
+                    }}
+                    onClick={() => removeFromCart(product.id, true)}
+                  >
+                    წაშლა
+                  </Button>
+                </CartButtonsWrapper>
+              </CartProductDesc>
+            </CartProductInfo>
+          </CartProductRow>
         );
       })}
+      {}
+      <div>
+        <div
+          className="SPrice"
+          style={{ fontWeight: "bold", color: "#FF9900" }}
+        >
+          პროდუქტების ღირებულეის ჯამი: {totalPrice} ₾
+        </div>
+        <div
+          className="SPrice"
+          style={{ fontWeight: "bold", color: "#FF9900" }}
+        >
+          პროდუქტების რაოდენობის ჯამი: {totalItems} ცალი
+        </div>
+      </div>
     </Modal>
   );
 }
