@@ -88,7 +88,7 @@ export function Photo() {
           <PaginationNumber
             key={number}
             onClick={() => goToPage(number)}
-            active={number === currentPage}
+            $active={number === currentPage}
           >
             {number}
           </PaginationNumber>

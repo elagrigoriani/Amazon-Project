@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { privateAxios } from "../../utils/privateAxios";
+import { ICartProduct } from "../../view/layouts/Navigation/shared/types";
 
 export function useCart() {
-  const [cartProducts, setCartProducts] = useState();
+  const [cartProducts, setCartProducts] = useState<ICartProduct>();
 
   async function getCartProducts() {
     const resp = await privateAxios.get("/cart");

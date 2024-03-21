@@ -15,6 +15,8 @@ import { Search } from "../../Home/Search/Search";
 import { Navigation } from "../Navigation";
 import { CartModal } from "../../../components/CartModal";
 import { useCart } from "../../../hooks/useCart";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export function LayoutHeader() {
   const { authStage, userData, logout } = useAuthProvider();
@@ -45,6 +47,7 @@ export function LayoutHeader() {
         <button className="cart-button" onClick={() => setShow(true)}>
           {<img src={cartImage} alt="img" />}
         </button>
+        <FontAwesomeIcon icon={faHeart} style={{ color: "#ff9900" }} />
         <Space>
           {authStage === TAuthorizationStage_Enum.AUTHORIZED ? (
             <div>

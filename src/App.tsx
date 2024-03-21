@@ -16,6 +16,7 @@ import { TV } from "./view/layouts/Navigation/Pages/TV";
 import { Gaming } from "./view/layouts/Navigation/Pages/Gaming";
 import { Audio } from "./view/layouts/Navigation/Pages/Audio";
 import { SearchResults } from "./view/Home/Search/SearchResults";
+import { CheckOut } from "./components/CheckOut";
 
 function App() {
   const location = useLocation();
@@ -42,6 +43,7 @@ function App() {
           <Route path="/TV | მონიტორები" element={<TV />} />
           <Route path="/ტაბები" element={<Tab />} />
           <Route path="/" element={<SearchResults />} />
+          <Route path="/purchases" element={<CheckOut />} />
         </Route>
       </Routes>
 

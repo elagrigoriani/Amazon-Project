@@ -21,7 +21,7 @@ export function Navigation() {
     <SNav>
       {categories.map((category: ICategories) => {
         return (
-          <SCat onClick={() => navigate(`/${category.name}`)}>
+          <SCat key={category.id} onClick={() => navigate(`/${category.name}`)}>
             {category.name}
           </SCat>
         );

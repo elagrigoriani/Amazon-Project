@@ -111,7 +111,6 @@ export function SignUpModal({ onCancel }: SignUpModalProps) {
         <Form.Item
           label="პაროლი"
           name="password"
-          яя
           rules={[{ required: true, message: "გთხოვთ ჩაწეროთ თქვენი პაროლი!" }]}
         >
           <Input.Password />

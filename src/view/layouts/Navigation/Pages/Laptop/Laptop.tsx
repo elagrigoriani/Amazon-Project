@@ -9,7 +9,10 @@ import {
   PaginationWrapper,
   PaginationButton,
   PaginationNumber,
+  LikeButton,
 } from ".././Smartphone/SSmartphone.styled";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export function Laptop() {
   const [products, setProducts] = useState<IProducts[]>([]);
@@ -71,9 +74,24 @@ export function Laptop() {
               <img src={product.image} alt={product.title} />
               <span>{product.price} ₾</span>
               <p>{product.description}</p>
-              <button onClick={() => addToCart(product.id)}>
-                კალათაში დამატება
-              </button>
+              <div style={{ display: "flex" }}>
+                <div>
+                  <button onClick={() => addToCart(product.id)}>
+                    კალათაში დამატება
+                  </button>{" "}
+                </div>
+                <div>
+                  {" "}
+                  <LikeButton>
+                    {
+                      <FontAwesomeIcon
+                        icon={faHeart}
+                        style={{ color: "#ff9900" }}
+                      />
+                    }
+                  </LikeButton>
+                </div>
+              </div>
             </SSmartphone>
           ))}
       </SWrapper>
@@ -88,7 +106,7 @@ export function Laptop() {
           <PaginationNumber
             key={number}
             onClick={() => goToPage(number)}
-            active={number === currentPage}
+            $active={number === currentPage}
           >
             {number}
           </PaginationNumber>

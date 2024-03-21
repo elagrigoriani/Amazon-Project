@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
 export const SWrapper = styled.div`
@@ -17,7 +18,7 @@ export const SSmartphone = styled.div`
   align-items: center;
   padding: 5px;
   /* background-color: green; */
-  border: 1px solid #ffdca8;
+  border: 1px solid lightgray;
   border-radius: 10px;
   span {
     font-weight: bold;
@@ -73,12 +74,12 @@ export const PaginationButton = styled.button`
   }
 `;
 
-export const PaginationNumber = styled.span`
+export const PaginationNumber = styled.span<{ $active: boolean }>`
   padding: 12px;
   margin: 12px 5px;
   cursor: pointer;
-  ${({ active }) =>
-    active &&
+  ${({ $active }) =>
+    $active &&
     `
     background-color: #737373;
     color: #ffffff;
@@ -87,5 +88,17 @@ export const PaginationNumber = styled.span`
 
   &:hover {
     text-decoration: underline;
+  }
+`;
+export const LikeButton = styled.div`
+  margin-left: 8px;
+  padding: 7px;
+  background-color: #fff;
+  font-size: 12px;
+  border-radius: 5px;
+  border: 1px solid white;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid #ff9900;
   }
 `;

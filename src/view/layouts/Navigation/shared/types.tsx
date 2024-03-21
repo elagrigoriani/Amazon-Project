@@ -16,6 +16,12 @@ export type IProducts = {
 };
 
 export type ICartProduct = {
+  map(
+    arg0: (
+      product: ICartProduct,
+      index: number
+    ) => import("react/jsx-runtime").JSX.Element
+  ): import("react").ReactNode;
   cartProduct: IProducts;
   count: number;
   created_at: string;

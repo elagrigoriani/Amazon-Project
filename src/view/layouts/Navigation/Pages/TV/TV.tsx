@@ -15,6 +15,7 @@ export function TV() {
   const [products, setProducts] = useState<IProducts[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { cartProducts, addToCart } = useCart();
+  console.log(cartProducts);
   const itemsPerPage = 12;
 
   async function getProducts(categoryName: string) {
@@ -87,7 +88,7 @@ export function TV() {
           <PaginationNumber
             key={number}
             onClick={() => goToPage(number)}
-            active={number === currentPage}
+            $active={number === currentPage}
           >
             {number}
           </PaginationNumber>

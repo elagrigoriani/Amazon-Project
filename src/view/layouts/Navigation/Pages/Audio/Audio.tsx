@@ -2,12 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { IProducts } from "../../shared/types";
 import { useCart } from "../../../../../hooks/useCart";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import {
   SSmartphone,
   SWrapper,
   PaginationWrapper,
   PaginationButton,
   PaginationNumber,
+  LikeButton,
 } from ".././Smartphone/SSmartphone.styled";
 
 export function Audio() {
@@ -70,9 +73,24 @@ export function Audio() {
               <img src={product.image} alt={product.title} />
               <span>{product.price} ₾</span>
               <p>{product.description}</p>
-              <button onClick={() => addToCart(product.id)}>
-                კალათაში დამატება
-              </button>{" "}
+              <div style={{ display: "flex" }}>
+                <div>
+                  <button onClick={() => addToCart(product.id)}>
+                    კალათაში დამატება
+                  </button>{" "}
+                </div>
+                <div>
+                  {" "}
+                  <LikeButton>
+                    {
+                      <FontAwesomeIcon
+                        icon={faHeart}
+                        style={{ color: "#ff9900" }}
+                      />
+                    }
+                  </LikeButton>
+                </div>
+              </div>
             </SSmartphone>
           ))}
       </SWrapper>
@@ -87,7 +105,7 @@ export function Audio() {
           <PaginationNumber
             key={number}
             onClick={() => goToPage(number)}
-            active={number === currentPage}
+            $active={number === currentPage}
           >
             {number}
           </PaginationNumber>

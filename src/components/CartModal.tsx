@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal } from "antd";
+import { useNavigate } from "react-router-dom";
 import {
   CartButtonsWrapper,
   CartCount,
@@ -29,22 +30,29 @@ export function CartModal({
 }: CartModalProp) {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalItems, setTotalItems] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCartProducts();
   }, []);
 
   useEffect(() => {
-    let total = 0;
-    let items = 0;
-    cartProducts.forEach((product) => {
-      total += product.count * product.cartProduct.price;
-      items += product.count;
-    });
-    setTotalPrice(total);
-    setTotalItems(items);
+    if (cartProducts) {
+      let total = 0;
+      let items = 0;
+      cartProducts.forEach((product) => {
+        total += product.count * product.cartProduct.price;
+        items += product.count;
+      });
+      setTotalPrice(total);
+      setTotalItems(items);
+    }
   }, [cartProducts]);
 
+  const handlePurchase = () => {
+    navigate("/purchases");
+  };
+  console.log(cartProducts);
   return (
     <Modal
       open={true}
@@ -65,13 +73,17 @@ export function CartModal({
           color: "#FF9900",
         },
       }}
+      onOk={handlePurchase}
     >
       {cartProducts?.map((product: ICartProduct, index: number) => {
         return (
           <CartProductRow key={index}>
             <CartProductInfo>
               <CartProductImage>
-                <img src={product.cartProduct.image} />
+                <img
+                  src={product.cartProduct.image}
+                  alt={product.cartProduct.description}
+                />
               </CartProductImage>
               <CartProductDesc>
                 <CartProductTitle>
@@ -112,19 +124,18 @@ export function CartModal({
           </CartProductRow>
         );
       })}
-      {}
       <div>
         <div
           className="SPrice"
           style={{ fontWeight: "bold", color: "#FF9900" }}
         >
-          პროდუქტების ღირებულეის ჯამი: {totalPrice} ₾
+          პროდუქტების ჯამური ღირებულება: {totalPrice} ₾
         </div>
         <div
           className="SPrice"
           style={{ fontWeight: "bold", color: "#FF9900" }}
         >
-          პროდუქტების რაოდენობის ჯამი: {totalItems} ცალი
+          პროდუქტების ჯამური რაოდენობა: {totalItems} ცალი
         </div>
       </div>
     </Modal>
