@@ -73,7 +73,19 @@ export function Smartphone() {
           .map((product: IProducts) => (
             <SSmartphone key={product.id}>
               <img src={product.image} alt={product.title} />
-              <span>{product.price} ₾</span>
+              {product.salePrice !== null ? (
+                <>
+                  <span style={{ color: "black" }}>
+                    <s>{product.price} ₾</s>
+                  </span>
+                  <span>
+                    <span style={{ color: "red" }}>Sale</span>{" "}
+                    {product.salePrice} ₾
+                  </span>
+                </>
+              ) : (
+                <span>{product.price} ₾</span>
+              )}
               <p>{product.description}</p>
               <div style={{ display: "flex" }}>
                 <div>
@@ -82,7 +94,6 @@ export function Smartphone() {
                   </button>{" "}
                 </div>
                 <div>
-                  {" "}
                   <LikeButton onClick={() => addToLike(product.id)}>
                     {
                       <FontAwesomeIcon
@@ -96,6 +107,7 @@ export function Smartphone() {
             </SSmartphone>
           ))}
       </SWrapper>
+
       <PaginationWrapper>
         <PaginationButton
           onClick={goToPreviousPage}

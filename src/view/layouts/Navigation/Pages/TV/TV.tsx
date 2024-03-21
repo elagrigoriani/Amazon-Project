@@ -74,7 +74,19 @@ export function TV() {
           .map((product: IProducts) => (
             <SSmartphone key={product.id}>
               <img src={product.image} alt={product.title} />
-              <span>{product.price} ₾</span>
+              {product.salePrice !== null ? (
+                <>
+                  <span style={{ color: "black" }}>
+                    <s>{product.price} ₾</s>
+                  </span>
+                  <span>
+                    <span style={{ color: "red" }}>Sale</span>{" "}
+                    {product.salePrice} ₾
+                  </span>
+                </>
+              ) : (
+                <span>{product.price} ₾</span>
+              )}
               <p>{product.description}</p>
               <div style={{ display: "flex" }}>
                 <div>
@@ -83,7 +95,6 @@ export function TV() {
                   </button>{" "}
                 </div>
                 <div>
-                  {" "}
                   <LikeButton onClick={() => addToLike(product.id)}>
                     {
                       <FontAwesomeIcon
@@ -97,6 +108,7 @@ export function TV() {
             </SSmartphone>
           ))}
       </SWrapper>
+
       <PaginationWrapper>
         <PaginationButton
           onClick={goToPreviousPage}

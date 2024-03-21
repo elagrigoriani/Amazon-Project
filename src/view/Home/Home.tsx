@@ -1,6 +1,6 @@
-import { useAuthProvider } from "../../provider/AuthProvider";
+// import { useAuthProvider } from "../../provider/AuthProvider";
 
 export function Home() {
-  const { userData } = useAuthProvider();
-  return <div>{userData?.first_name || ""}</div>;
+  // const { userData } = useAuthProvider();
+  return <div>{/* {userData?.first_name || ""} */}</div>;
 }
