@@ -13,12 +13,14 @@ import {
 } from ".././Smartphone/SSmartphone.styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useLike } from "../../../../../hooks/useLike";
 
 export function Laptop() {
   const [products, setProducts] = useState<IProducts[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { cartProducts, addToCart } = useCart();
-  console.log(cartProducts);
+  const { likeProducts, addToLike } = useLike();
+  console.log(cartProducts, likeProducts);
   const itemsPerPage = 12;
 
   async function getProducts(categoryName: string) {
@@ -82,7 +84,7 @@ export function Laptop() {
                 </div>
                 <div>
                   {" "}
-                  <LikeButton>
+                  <LikeButton onClick={() => addToLike(product.id)}>
                     {
                       <FontAwesomeIcon
                         icon={faHeart}

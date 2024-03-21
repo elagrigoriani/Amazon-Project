@@ -11,7 +11,6 @@ export const CartProductInfo = styled.div`
   border-radius: 5px;
   border: 1px solid lightgrey;
   display: flex;
-  /* background-color: red; */
 `;
 
 export const CartProductDesc = styled.div`

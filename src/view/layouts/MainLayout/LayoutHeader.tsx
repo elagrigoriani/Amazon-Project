@@ -1,4 +1,3 @@
-import { Avatar, Button, ConfigProvider, Space, Popover } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../images/logo.png";
@@ -17,15 +16,21 @@ import { CartModal } from "../../../components/CartModal";
 import { useCart } from "../../../hooks/useCart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useLike } from "../../../hooks/useLike";
+import { Avatar, Button, ConfigProvider, Popover, Space } from "antd";
+import { LikeModal } from "../../../components/LikeModal";
 
 export function LayoutHeader() {
   const { authStage, userData, logout } = useAuthProvider();
-  const [show, setShow] = useState(false);
-  const navigate = useNavigate();
+  const [showCartModal, setShowCartModal] = useState(false);
   const [showSignUp, setShowSignUp] = useState<boolean>(false);
   const [showSignIn, setShowSignIn] = useState<boolean>(false);
+  const [showLikeModal, setShowLikeModal] = useState<boolean>(false);
+  const navigate = useNavigate();
   const { cartProducts, addToCart, removeFromCart, getCartProducts } =
     useCart();
+  const { likeProducts, addToLike, removeFromLike, getLikeProducts } =
+    useLike();
 
   return (
     <div>
@@ -35,19 +40,37 @@ export function LayoutHeader() {
         </a>
 
         <Search />
-        {show && (
+        {showCartModal && (
           <CartModal
             cartProducts={cartProducts as any}
-            onCancel={() => setShow(false)}
+            onCancel={() => setShowCartModal(false)}
             addToCart={addToCart}
             removeFromCart={removeFromCart}
             getCartProducts={getCartProducts}
           />
         )}
-        <button className="cart-button" onClick={() => setShow(true)}>
-          {<img src={cartImage} alt="img" />}
+        <button
+          className="cart-button"
+          onClick={() => setShowCartModal(true)}
+          style={{ cursor: "pointer" }}
+        >
+          <img src={cartImage} alt="img" />
         </button>
-        <FontAwesomeIcon icon={faHeart} style={{ color: "#ff9900" }} />
+        <button
+          className="cart-button"
+          onClick={() => setShowLikeModal(true)}
+          style={{
+            cursor: "pointer",
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faHeart}
+            style={{
+              color: "white",
+              padding: "8px",
+            }}
+          />
+        </button>
         <Space>
           {authStage === TAuthorizationStage_Enum.AUTHORIZED ? (
             <div>
@@ -113,10 +136,18 @@ export function LayoutHeader() {
             </div>
           )}
         </Space>
-
         {showSignIn && <SignInModal onCancel={() => setShowSignIn(false)} />}
         {showSignUp && <SignUpModal onCancel={() => setShowSignUp(false)} />}
       </SLayoutHeader>
+      {showLikeModal && (
+        <LikeModal
+          likeProducts={likeProducts as any}
+          onCancel={() => setShowLikeModal(false)}
+          addToLike={addToLike}
+          removeFromLike={removeFromLike}
+          getLikeProducts={getLikeProducts}
+        />
+      )}
       <Navigation />
     </div>
   );

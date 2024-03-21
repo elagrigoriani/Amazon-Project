@@ -30,3 +30,19 @@ export type ICartProduct = {
   updated_at: string;
   user_id: string;
 };
+
+export type ILikeProduct = {
+  map(
+    arg0: (
+      product: ILikeProduct,
+      index: number
+    ) => import("react/jsx-runtime").JSX.Element
+  ): import("react").ReactNode;
+  likedProduct: IProducts;
+  count: number;
+  created_at: string;
+  id: string;
+  product_id: string;
+  updated_at: string;
+  user_id: string;
+};

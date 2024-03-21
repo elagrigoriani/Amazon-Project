@@ -8,13 +8,18 @@ import {
   PaginationWrapper,
   PaginationButton,
   PaginationNumber,
+  LikeButton,
 } from "./SSmartphone.styled";
+import { useLike } from "../../../../../hooks/useLike";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export function Smartphone() {
   const [products, setProducts] = useState<IProducts[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { cartProducts, addToCart } = useCart();
-  console.log(cartProducts);
+  const { likeProducts, addToLike } = useLike();
+  console.log(cartProducts, likeProducts);
   const itemsPerPage = 12;
 
   async function getProducts(categoryName: string) {
@@ -70,9 +75,24 @@ export function Smartphone() {
               <img src={product.image} alt={product.title} />
               <span>{product.price} ₾</span>
               <p>{product.description}</p>
-              <button onClick={() => addToCart(product.id)}>
-                კალათაში დამატება
-              </button>
+              <div style={{ display: "flex" }}>
+                <div>
+                  <button onClick={() => addToCart(product.id)}>
+                    კალათაში დამატება
+                  </button>{" "}
+                </div>
+                <div>
+                  {" "}
+                  <LikeButton onClick={() => addToLike(product.id)}>
+                    {
+                      <FontAwesomeIcon
+                        icon={faHeart}
+                        style={{ color: "#ff9900" }}
+                      />
+                    }
+                  </LikeButton>
+                </div>
+              </div>
             </SSmartphone>
           ))}
       </SWrapper>

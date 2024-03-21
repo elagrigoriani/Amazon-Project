@@ -12,12 +12,14 @@ import {
   PaginationNumber,
   LikeButton,
 } from ".././Smartphone/SSmartphone.styled";
+import { useLike } from "../../../../../hooks/useLike";
 
 export function Audio() {
   const [products, setProducts] = useState<IProducts[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { cartProducts, addToCart } = useCart();
-  console.log(cartProducts);
+  const { likeProducts, addToLike } = useLike();
+  console.log(cartProducts, likeProducts);
   const itemsPerPage = 12;
 
   async function getProducts(categoryName: string) {
@@ -81,7 +83,7 @@ export function Audio() {
                 </div>
                 <div>
                   {" "}
-                  <LikeButton>
+                  <LikeButton onClick={() => addToLike(product.id)}>
                     {
                       <FontAwesomeIcon
                         icon={faHeart}
