@@ -12,20 +12,18 @@ import {
   LikeButton,
 } from "../../../view/layouts/Navigation/Pages/Smartphone/SSmartphone.styled";
 import { useLike } from "../../../hooks/useLike";
-import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
+import { Slide } from "react-slideshow-image";
 
 export function CarouselFunc() {
   const [products, setProducts] = useState<IProducts[]>([]);
   const { cartProducts, addToCart } = useCart();
   const { likeProducts, addToLike } = useLike();
   console.log(cartProducts, likeProducts);
-  async function getProducts(categoryName: string) {
+  async function getProducts() {
     try {
       const resp = await axios.get(
-        `http://localhost:3000/product?categoryName=${encodeURIComponent(
-          categoryName
-        )}&pageSize=130`
+        `http://localhost:3000/product?&pageSize=130`
       );
       if (Array.isArray(resp.data.products)) {
         setProducts(resp.data.products);
@@ -38,8 +36,9 @@ export function CarouselFunc() {
   }
 
   useEffect(() => {
-    getProducts("აუდიო");
+    getProducts();
   }, []);
+
   return (
     <>
       <Carousel autoplay>
@@ -75,44 +74,47 @@ export function CarouselFunc() {
         </SCarouselFunc>
       </Carousel>
       <div>
-        <SWrapper>
-          {products.map((product: IProducts) => (
-            <SSmartphone key={product.id}>
-              <img src={product.image} alt={product.title} />
-              {product.salePrice !== null ? (
-                <>
-                  <span style={{ color: "black" }}>
-                    <s>{product.price} ₾</s>
-                  </span>
-                  <span>
-                    <span style={{ color: "red" }}>Sale</span>{" "}
-                    {product.salePrice} ₾
-                  </span>
-                </>
-              ) : (
-                <span>{product.price} ₾</span>
-              )}
-              <p>{product.description}</p>
-              <div style={{ display: "flex" }}>
-                <div>
-                  <button onClick={() => addToCart(product.id)}>
-                    კალათაში დამატება
-                  </button>{" "}
-                </div>
-                <div>
-                  <LikeButton onClick={() => addToLike(product.id)}>
-                    {
-                      <FontAwesomeIcon
-                        icon={faHeart}
-                        style={{ color: "#ff9900" }}
-                      />
-                    }
-                  </LikeButton>
-                </div>
-              </div>
-            </SSmartphone>
-          ))}
-        </SWrapper>
+        <h1>ფასდაკლებული პროდუქტები</h1>
+        <Slide>
+          <SWrapper>
+            {products.map(
+              (product: IProducts) =>
+                product.salePrice && (
+                  <SSmartphone key={product.id}>
+                    <img src={product.image} alt={product.title} />
+                    <>
+                      <span style={{ color: "black" }}>
+                        <s>{product.price} ₾</s>
+                      </span>
+                      <span>
+                        <span style={{ color: "red" }}>Sale</span>{" "}
+                        {product.salePrice} ₾
+                      </span>
+                    </>
+
+                    <p>{product.description}</p>
+                    <div style={{ display: "flex" }}>
+                      <div>
+                        <button onClick={() => addToCart(product.id)}>
+                          კალათაში დამატება
+                        </button>{" "}
+                      </div>
+                      <div>
+                        <LikeButton onClick={() => addToLike(product.id)}>
+                          {
+                            <FontAwesomeIcon
+                              icon={faHeart}
+                              style={{ color: "#ff9900" }}
+                            />
+                          }
+                        </LikeButton>
+                      </div>
+                    </div>
+                  </SSmartphone>
+                )
+            )}
+          </SWrapper>
+        </Slide>
       </div>
     </>
   );

@@ -12,9 +12,15 @@ import {
   CartCount,
   // CheckOutWrapper,
 } from "./CartModal.styled";
+import { useNavigate } from "react-router-dom";
 
 export function CheckOut() {
+  const navigate = useNavigate();
+
   const { cartProducts, getCartProducts } = useCart();
+  const handlePurchase = () => {
+    navigate("/creditcard");
+  };
   useEffect(() => {
     getCartProducts();
   }, []);
@@ -78,7 +84,7 @@ export function CheckOut() {
           e.target.style.borderColor = "white";
           e.target.style.color = "white";
         }}
-        onClick={() => alert("გილოცავთ შენაძენს !")}
+        onClick={() => handlePurchase()}
       >
         ყიდვა
       </button>{" "}

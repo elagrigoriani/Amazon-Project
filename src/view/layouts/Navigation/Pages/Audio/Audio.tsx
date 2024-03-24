@@ -13,14 +13,24 @@ import {
   LikeButton,
 } from ".././Smartphone/SSmartphone.styled";
 import { useLike } from "../../../../../hooks/useLike";
+import { useNavigate } from "react-router-dom";
 
 export function Audio() {
   const [products, setProducts] = useState<IProducts[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { cartProducts, addToCart } = useCart();
   const { likeProducts, addToLike } = useLike();
+  const navigate = useNavigate();
   console.log(cartProducts, likeProducts);
+
   const itemsPerPage = 12;
+  const [sortBy, setSortBy] = useState<"lowestToHighest" | "highestToLowest">(
+    "lowestToHighest"
+  );
+
+  useEffect(() => {
+    getProducts("აუდიო");
+  }, []);
 
   async function getProducts(categoryName: string) {
     try {
@@ -39,11 +49,19 @@ export function Audio() {
     }
   }
 
-  useEffect(() => {
-    getProducts("აუდიო");
-  }, []);
+  const handlePurchase = (productId: string) => {
+    navigate(`/productpage/${productId}`);
+  };
 
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const sortedProducts = [...products].sort((a, b) => {
+    if (sortBy === "lowestToHighest") {
+      return a.price - b.price;
+    } else {
+      return b.price - a.price;
+    }
+  });
+
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
 
   const goToPreviousPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
@@ -65,14 +83,51 @@ export function Audio() {
     return pageNumbers;
   };
 
+  const handleSortChange = (value: "lowestToHighest" | "highestToLowest") => {
+    setSortBy(value);
+  };
+
   return (
     <>
+      <div>
+        <label style={{ margin: "5px" }}>
+          ფილტრი ფასის მიხედვით
+          <select
+            style={{
+              padding: "5px",
+              color: "#ff9900",
+              marginLeft: "5px",
+              marginTop: "5px",
+              border: "1px solid #ff9900",
+            }}
+            value={sortBy}
+            onChange={(e) =>
+              handleSortChange(
+                e.target.value as "lowestToHighest" | "highestToLowest"
+              )
+            }
+          >
+            <option value="lowestToHighest" className="custom-option">
+              ზრდადობით დალაგება
+            </option>
+            <option value="highestToLowest" className="custom-option">
+              კლებადობით დალაგება
+            </option>
+          </select>
+        </label>
+      </div>
+
       <SWrapper>
-        {products
+        {sortedProducts
           .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
           .map((product: IProducts) => (
             <SSmartphone key={product.id}>
-              <img src={product.image} alt={product.title} />
+              <button
+                style={{ border: "none", backgroundColor: "transparent" }}
+                onClick={() => handlePurchase(product.id)}
+              >
+                <img src={product.image} alt={product.title} />
+              </button>
               {product.salePrice !== null ? (
                 <>
                   <span style={{ color: "black" }}>

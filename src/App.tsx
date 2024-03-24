@@ -17,6 +17,8 @@ import { Gaming } from "./view/layouts/Navigation/Pages/Gaming";
 import { Audio } from "./view/layouts/Navigation/Pages/Audio";
 import { SearchResults } from "./view/Home/Search/SearchResults";
 import { CheckOut } from "./components/CheckOut";
+import { ProductPage } from "./view/layouts/Navigation/Pages/ProductPage";
+import { CreditCard } from "./components/CreditCard";
 
 function App() {
   const location = useLocation();
@@ -44,6 +46,8 @@ function App() {
           <Route path="/ტაბები" element={<Tab />} />
           <Route path="/" element={<SearchResults />} />
           <Route path="/purchases" element={<CheckOut />} />
+          <Route path="/productpage/:productId" element={<ProductPage />} />
+          <Route path="/creditcard" element={<CreditCard />} />
         </Route>
       </Routes>
 
