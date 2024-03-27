@@ -1,13 +1,18 @@
+// useCart.js
 import { useState } from "react";
 import { privateAxios } from "../../utils/privateAxios";
 import { ICartProduct } from "../../view/layouts/Navigation/shared/types";
 
 export function useCart() {
-  const [cartProducts, setCartProducts] = useState<ICartProduct>();
+  const [cartProducts, setCartProducts] = useState<ICartProduct[]>();
 
   async function getCartProducts() {
-    const resp = await privateAxios.get("/cart");
-    setCartProducts(resp.data);
+    try {
+      const resp = await privateAxios.get("/cart");
+      setCartProducts(resp.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async function addToCart(productId: string) {
@@ -30,5 +35,10 @@ export function useCart() {
     }
   }
 
-  return { cartProducts, getCartProducts, addToCart, removeFromCart };
+  return {
+    cartProducts,
+    getCartProducts,
+    addToCart,
+    removeFromCart,
+  };
 }

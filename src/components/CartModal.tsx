@@ -73,7 +73,10 @@ export function CartModal({
           color: "#FF9900",
         },
       }}
-      onOk={handlePurchase}
+      onOk={() => {
+        handlePurchase();
+        onCancel();
+      }}
     >
       {cartProducts?.map((product: ICartProduct, index: number) => {
         return (

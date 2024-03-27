@@ -36,6 +36,7 @@ export function SignUpModal({ onCancel }: SignUpModalProps) {
       setAuthLoading(true);
       const response = await publicAxios.post("/auth/register", values);
       setAuthData(response.data as TAuthRequest);
+      onCancel();
     } catch (error) {
     } finally {
       setAuthLoading(false);

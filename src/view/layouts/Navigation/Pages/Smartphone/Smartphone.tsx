@@ -29,6 +29,10 @@ export function Smartphone() {
     getProducts("სმარტფონები");
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   async function getProducts(categoryName: string) {
     try {
       const resp = await axios.get(

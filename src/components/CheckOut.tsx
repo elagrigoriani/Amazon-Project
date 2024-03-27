@@ -10,21 +10,34 @@ import {
   CartProductPrice,
   CartButtonsWrapper,
   CartCount,
-  // CheckOutWrapper,
 } from "./CartModal.styled";
 import { useNavigate } from "react-router-dom";
 
 export function CheckOut() {
   const navigate = useNavigate();
-
   const { cartProducts, getCartProducts } = useCart();
+
   const handlePurchase = () => {
-    navigate("/creditcard");
+    fetch("http://localhost:3000/purchases", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartProducts),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Purchase response:", data);
+        navigate("/creditcard");
+      })
+      .catch((error) => {
+        console.error("Purchase error:", error);
+      });
   };
   useEffect(() => {
     getCartProducts();
   }, []);
-  console.log(cartProducts);
+
   return (
     <div>
       <h2 style={{ marginLeft: "20px", color: "#FF9900", marginTop: "20px" }}>
@@ -35,7 +48,6 @@ export function CheckOut() {
           <div key={index}>
             <CartProductRow key={index}>
               <CartProductInfo style={{ width: "30%" }}>
-                {" "}
                 <CartProductImage>
                   <img
                     src={product.cartProduct.image}
@@ -87,7 +99,7 @@ export function CheckOut() {
         onClick={() => handlePurchase()}
       >
         ყიდვა
-      </button>{" "}
+      </button>
     </div>
   );
 }

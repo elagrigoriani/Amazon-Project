@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { IProducts } from "../../shared/types";
 import { useCart } from "../../../../../hooks/useCart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,6 +31,10 @@ export function Audio() {
   useEffect(() => {
     getProducts("აუდიო");
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   async function getProducts(categoryName: string) {
     try {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Cards from "../../images/cards.png";
 import Order from "../../images/order.png";
 import { Input, Label, SubmitButton } from "./CreditCard.styled";
+import { useNavigate } from "react-router-dom";
 
 export function CreditCard() {
   const [cardNumber, setCardNumber] = useState<string>("");
@@ -23,7 +24,7 @@ export function CreditCard() {
     value = value.slice(0, 19);
     setCardNumber(value);
     if (value.replace(/\s/g, "").length < 16) {
-      setCardNumberError("Please enter a valid 16-digit card number");
+      setCardNumberError("გთხოვთ შეიყვანოთ ბარათის ნომერი");
     } else {
       setCardNumberError("");
     }
@@ -35,7 +36,7 @@ export function CreditCard() {
     value = value.slice(0, 3);
     setCvc(value);
     if (value.length < 3) {
-      setCvcError("Please enter a valid 3-digit CVC");
+      setCvcError("გთხოვთ შეიყვანოთ CVC");
     } else {
       setCvcError("");
     }
@@ -47,7 +48,7 @@ export function CreditCard() {
     const value = event.target.value;
     setCardholder(value);
     if (!value.trim()) {
-      setCardholderError("Please enter the cardholder's name");
+      setCardholderError("გთხოვთ შეიყვანოთ სახელი და გვარი ");
     } else {
       setCardholderError("");
     }
@@ -58,45 +59,38 @@ export function CreditCard() {
 
     let formValid = true;
 
-    // Check if card number is empty or less than 16 digits
     if (!cardNumber.trim() || cardNumber.replace(/\s/g, "").length < 16) {
-      setCardNumberError("Please enter a valid 16-digit card number");
+      setCardNumberError("გთხოვთ სწორად შეიყვანოთ ბარათის ნომერი");
       formValid = false;
     } else {
       setCardNumberError("");
     }
-
-    // Check if cardholder name is empty
     if (!cardholder.trim()) {
-      setCardholderError("Please enter the cardholder's name");
+      setCardholderError("გთხოვთ სწორად შეიყვანოთ სახელი და გვარი");
       formValid = false;
     } else {
       setCardholderError("");
     }
-
-    // Check if cvc is empty or less than 3 digits
     if (!cvc.trim() || cvc.length < 3) {
-      setCvcError("Please enter a valid 3-digit CVC");
+      setCvcError("გთხოვთ სწორად შეიყვანოთ CVC ");
+
       formValid = false;
     } else {
       setCvcError("");
     }
-
-    // Check if expiry month or year are not selected
     if (expiryMonth === "month" || expiryYear === "year") {
-      // Assuming both month and year are required
-      // You can adjust the logic according to your requirements
-      // For example, if only one is required, you can check it individually
-      // and provide specific error messages
-      // Here, I'm providing a generic message
-      setCardNumberError("Please select expiry month and year");
+      setCardNumberError("გთხოვთ აირჩიეთ თვე და წელი");
       formValid = false;
     }
 
-    // If all fields are valid, show success modal
     if (formValid) {
       setShowSuccessModal(true);
     }
+  };
+  const navigate = useNavigate();
+  const handlePurchase = () => {
+    navigate("/orders");
+    setShowSuccessModal(false);
   };
 
   return (
@@ -249,7 +243,14 @@ export function CreditCard() {
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <button onClick={() => setShowSuccessModal(false)}>X</button>
+            <button
+              onClick={() => {
+                setShowSuccessModal(false);
+                navigate("/orders");
+              }}
+            >
+              X
+            </button>
             <h1>Thank you for your order!</h1>
             <img src={Order} alt="Order" style={{ marginLeft: "65px" }} />
           </div>
