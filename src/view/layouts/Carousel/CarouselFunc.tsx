@@ -87,7 +87,7 @@ export function CarouselFunc() {
                         <s>{product.price} ₾</s>
                       </span>
                       <span>
-                        <span style={{ color: "red" }}>Sale</span>{" "}
+                        <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
                         {product.salePrice} ₾
                       </span>
                     </>

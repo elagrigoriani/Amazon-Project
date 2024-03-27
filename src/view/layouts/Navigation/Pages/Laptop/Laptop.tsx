@@ -27,6 +27,7 @@ export function Laptop() {
 
   useEffect(() => {
     getProducts("ლეპტოპები");
+    window.scrollTo(0, 0);
   }, []);
 
   async function getProducts(categoryName: string) {
@@ -122,7 +123,7 @@ export function Laptop() {
                     <s>{product.price} ₾</s>
                   </span>
                   <span>
-                    <span style={{ color: "red" }}>Sale</span>{" "}
+                    <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
                     {product.salePrice} ₾
                   </span>
                 </>

@@ -33,7 +33,7 @@ export function Audio() {
   }, []);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo(0, 0);
   }, [currentPage]);
 
   async function getProducts(categoryName: string) {
@@ -138,7 +138,7 @@ export function Audio() {
                     <s>{product.price} ₾</s>
                   </span>
                   <span>
-                    <span style={{ color: "red" }}>Sale</span>{" "}
+                    <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
                     {product.salePrice} ₾
                   </span>
                 </>

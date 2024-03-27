@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Orders() {
   const [orderHistory, setOrderHistory] = useState([]);
@@ -21,25 +21,52 @@ export function Orders() {
   }, []);
 
   return (
-    <div>
-      <h2 style={{ marginLeft: "20px", color: "#FF9900", marginTop: "20px" }}>
-        შეკვეთების ისტორია{" "}
-      </h2>
-      {orderHistory.length > 0 ? (
-        <div>
-          {orderHistory.map((order, index) => (
-            <div key={index}>
-              {}
-              <p>შეკვეთის ნომერი {order.id}</p>
-              <p>
-                შეკვეთის თარიღი {new Date(order.created_at).toLocaleString()}
-              </p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>შეკვეთების ისტორია ცარიელია</p>
-      )}
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <div>
+        <h2
+          style={{
+            color: "#FF9900",
+            marginTop: "20px",
+            marginBottom: "10px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          შეკვეთების ისტორია{" "}
+        </h2>
+        {orderHistory.length > 0 ? (
+          <div>
+            {orderHistory.map((order, index) => (
+              <div
+                key={index}
+                style={{
+                  marginBottom: "15px",
+                  padding: "5px",
+                  border: "1px solid lightgrey",
+                  borderRadius: "5px",
+                }}
+              >
+                {}
+
+                <p>
+                  <b>შეკვეთის ნომერი</b> {order.id}
+                </p>
+                <p>
+                  <b> შეკვეთის თარიღი </b>
+                  {new Date(order.created_at).toLocaleString()}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>შეკვეთების ისტორია ცარიელია</p>
+        )}
+      </div>
     </div>
   );
 }

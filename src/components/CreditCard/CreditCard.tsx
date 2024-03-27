@@ -114,7 +114,7 @@ export function CreditCard() {
             color: "#FF9900",
           }}
         >
-          Payment Details
+          გადახდის დეტალები
         </h1>
         <img style={{ width: "100%" }} src={Cards} alt="img" />
         <form onSubmit={handleSubmit}>
@@ -224,7 +224,11 @@ export function CreditCard() {
                   placeholder="XXX"
                 />
                 {cvcError && <div style={{ color: "red" }}>{cvcError}</div>}
-                <SubmitButton type="submit" value="Pay" className="Submit" />
+                <SubmitButton
+                  type="submit"
+                  value="გადახდა"
+                  className="Submit"
+                />
               </div>
             </div>
           </div>
@@ -241,18 +245,54 @@ export function CreditCard() {
               padding: "20px",
               borderRadius: "5px",
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              paddingTop: "50px",
+              paddingRight: "50px",
+              paddingLeft: "50px",
+              paddingBottom: "20px",
             }}
           >
-            <button
-              onClick={() => {
-                setShowSuccessModal(false);
-                navigate("/orders");
+            <h1>გილოცავთ შენაძენს !</h1>
+
+            <img
+              src={Order}
+              alt="Order"
+              style={{ marginLeft: "35px", marginBottom: "20px" }}
+            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
               }}
             >
-              X
-            </button>
-            <h1>Thank you for your order!</h1>
-            <img src={Order} alt="Order" style={{ marginLeft: "65px" }} />
+              <button
+                style={{
+                  border: "1px solid #FF9900",
+                  backgroundColor: "#FF9900",
+                  color: "white",
+                  padding: "12px 20px",
+
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = "transparent";
+                  e.target.style.borderColor = "#FF9900";
+                  e.target.style.color = "#FF9900";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = "#FF9900";
+                  e.target.style.borderColor = "white";
+                  e.target.style.color = "white";
+                }}
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  navigate("/orders");
+                }}
+              >
+                დახურვა
+              </button>
+            </div>
           </div>
         )}
       </div>

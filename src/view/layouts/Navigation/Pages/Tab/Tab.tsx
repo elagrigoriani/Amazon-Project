@@ -27,6 +27,7 @@ export function Tab() {
 
   useEffect(() => {
     getProducts("ტაბები");
+    window.scrollTo(0, 0); // Scrolls to the top when component mounts
   }, []);
 
   async function getProducts(categoryName: string) {
@@ -80,6 +81,10 @@ export function Tab() {
     setSortBy(value);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   return (
     <>
       <div>
@@ -122,7 +127,7 @@ export function Tab() {
                     <s>{product.price} ₾</s>
                   </span>
                   <span>
-                    <span style={{ color: "red" }}>Sale</span>{" "}
+                    <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
                     {product.salePrice} ₾
                   </span>
                 </>

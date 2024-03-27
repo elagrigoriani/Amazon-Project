@@ -29,6 +29,7 @@ export function CheckOut() {
       .then((data) => {
         console.log("Purchase response:", data);
         navigate("/creditcard");
+        window.scrollTo(0, 0);
       })
       .catch((error) => {
         console.error("Purchase error:", error);
