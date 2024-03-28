@@ -13,12 +13,14 @@ import {
   LikeButton,
 } from ".././Smartphone/SSmartphone.styled";
 import { useLike } from "../../../../../hooks/useLike";
+import { useNavigate } from "react-router-dom";
 
 export function Tab() {
   const [products, setProducts] = useState<IProducts[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { cartProducts, addToCart } = useCart();
   const { likeProducts, addToLike } = useLike();
+  const navigate = useNavigate();
   console.log(cartProducts, likeProducts);
   const itemsPerPage = 12;
   const [sortBy, setSortBy] = useState<"lowestToHighest" | "highestToLowest">(
@@ -27,8 +29,13 @@ export function Tab() {
 
   useEffect(() => {
     getProducts("ტაბები");
-    window.scrollTo(0, 0); // Scrolls to the top when component mounts
+    window.scrollTo(0, 0);
   }, []);
+
+  const handlePurchase = (productId: string) => {
+    navigate(`/productpage/${productId}`);
+    window.scrollTo(0, 0);
+  };
 
   async function getProducts(categoryName: string) {
     try {
@@ -120,36 +127,57 @@ export function Tab() {
           .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
           .map((product: IProducts) => (
             <SSmartphone key={product.id}>
-              <img src={product.image} alt={product.title} />
-              {product.salePrice !== null ? (
-                <>
-                  <span style={{ color: "black" }}>
-                    <s>{product.price} ₾</s>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  padding: "3px",
+                }}
+              >
+                <button
+                  style={{ border: "none", backgroundColor: "transparent" }}
+                  onClick={() => handlePurchase(product.id)}
+                >
+                  <img src={product.image} alt={product.title} />
+                </button>
+                {product.salePrice !== null ? (
+                  <>
+                    <span style={{ color: "black" }}>
+                      <s>{product.price} ₾</s>
+                    </span>
+                    <span>
+                      <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
+                      {product.salePrice} ₾
+                    </span>
+                  </>
+                ) : (
+                  <span style={{ marginBottom: "25px" }}>
+                    {product.price} ₾
                   </span>
-                  <span>
-                    <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
-                    {product.salePrice} ₾
-                  </span>
-                </>
-              ) : (
-                <span>{product.price} ₾</span>
-              )}
-              <p>{product.description}</p>
-              <div style={{ display: "flex" }}>
-                <div>
-                  <button onClick={() => addToCart(product.id)}>
-                    კალათაში დამატება
-                  </button>{" "}
-                </div>
-                <div>
-                  <LikeButton onClick={() => addToLike(product.id)}>
-                    {
-                      <FontAwesomeIcon
-                        icon={faHeart}
-                        style={{ color: "#ff9900" }}
-                      />
-                    }
-                  </LikeButton>
+                )}
+                <p>{product.description}</p>
+                <div
+                  style={{
+                    display: "flex",
+                    marginTop: "40px",
+                  }}
+                >
+                  <div>
+                    <button onClick={() => addToCart(product.id)}>
+                      კალათაში დამატება
+                    </button>{" "}
+                  </div>
+                  <div>
+                    <LikeButton onClick={() => addToLike(product.id)}>
+                      {
+                        <FontAwesomeIcon
+                          icon={faHeart}
+                          style={{ color: "#ff9900" }}
+                        />
+                      }
+                    </LikeButton>
+                  </div>
                 </div>
               </div>
             </SSmartphone>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../hooks/useCart";
 import { ICartProduct } from "../view/layouts/Navigation/shared/types";
 import {
@@ -12,10 +12,12 @@ import {
   CartCount,
 } from "./CartModal.styled";
 import { useNavigate } from "react-router-dom";
+import { calculateTotal } from "../utils/cartUtils";
 
 export function CheckOut() {
   const navigate = useNavigate();
   const { cartProducts, getCartProducts } = useCart();
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const handlePurchase = () => {
     fetch("http://localhost:3000/purchases", {
@@ -39,16 +41,33 @@ export function CheckOut() {
     getCartProducts();
   }, []);
 
+  useEffect(() => {
+    const { totalPrice } = calculateTotal(cartProducts);
+    setTotalPrice(totalPrice);
+  }, [cartProducts]);
   return (
-    <div>
+    <div
+      style={{
+        margin: "auto",
+        textAlign: "center",
+        paddingTop: "20px",
+      }}
+    >
       <h2 style={{ marginLeft: "20px", color: "#FF9900", marginTop: "20px" }}>
         ყიდვის გვერდი
       </h2>
       {cartProducts ? (
         cartProducts.map((product: ICartProduct, index: number) => (
           <div key={index}>
-            <CartProductRow key={index}>
-              <CartProductInfo style={{ width: "30%" }}>
+            <CartProductRow
+              key={index}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <CartProductInfo
+                style={{
+                  width: "30%",
+                }}
+              >
                 <CartProductImage>
                   <img
                     src={product.cartProduct.image}
@@ -60,7 +79,26 @@ export function CheckOut() {
                     {product.cartProduct.description}
                   </CartProductTitle>
                   <CartProductPrice>
-                    {product.cartProduct.price} <span> ₾ </span>
+                    {product.cartProduct.salePrice !== null ? (
+                      <>
+                        <span style={{ color: "black" }}>
+                          <s>
+                            {" "}
+                            <b>{product.cartProduct.price} ₾ </b>
+                          </s>
+                        </span>
+                        <span>
+                          <span style={{ color: "red" }}>
+                            <b>ფასდაკლება</b>
+                          </span>{" "}
+                          <b>{product.cartProduct.salePrice} ₾</b>
+                        </span>
+                      </>
+                    ) : (
+                      <span style={{ marginBottom: "25px" }}>
+                        <b>{product.cartProduct.price} ₾</b>
+                      </span>
+                    )}
                   </CartProductPrice>
                   <CartButtonsWrapper>
                     <CartCount>
@@ -75,7 +113,9 @@ export function CheckOut() {
       ) : (
         <p>არ არის პროდუქტები</p>
       )}
-      <div style={{ marginLeft: "20px" }}>პროდუქტები საერთო ღირებულება:</div>
+      <div style={{ marginLeft: "20px", marginTop: "20px" }}>
+        პროდუქტები საერთო ღირებულება: <b>{totalPrice} ლ</b>
+      </div>
       <button
         style={{
           border: "1px solid #FF9900",

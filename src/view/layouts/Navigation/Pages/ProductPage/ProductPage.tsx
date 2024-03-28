@@ -1,37 +1,30 @@
-import { useEffect, useState } from "react";
-import { IProducts } from "../../shared/types";
-import axios from "axios";
+import { useParams } from "react-router-dom";
 import {
   SProductPage,
   SProductPageAddToCart,
-  SProductPageCheckOut,
   SProductPageImage,
   SProductPagePrice,
 } from "./SProductPage.styled";
+import { useEffect, useState } from "react";
+import { IProducts } from "../../shared/types";
 import { useCart } from "../../../../../hooks/useCart";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function ProductPage() {
-  const [products, setProducts] = useState<IProducts[]>([]);
-  const { cartProducts, addToCart } = useCart();
-  const navigate = useNavigate();
-
-  const handlePurchase = () => {
-    navigate("/purchases");
-  };
-
-  console.log(products, cartProducts);
+  const [product, setProduct] = useState<IProducts | null>(null);
+  const { addToCart } = useCart();
+  const { productId } = useParams();
   useEffect(() => {
-    getProducts();
-  }, []);
+    getProduct(productId);
+  }, [productId]);
 
-  async function getProducts() {
+  async function getProduct(productId: string) {
     try {
       const resp = await axios.get(
-        `http://localhost:3000/product?&pageSize=130`
+        `http://localhost:3000/product/${productId}`
       );
-      if (Array.isArray(resp.data.products)) {
-        setProducts(resp.data.products);
+      if (resp.data) {
+        setProduct(resp.data);
       } else {
         console.error("Error");
       }
@@ -40,31 +33,40 @@ export function ProductPage() {
     }
   }
 
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <SProductPage>
-      {products?.map((product: IProducts) => (
-        <SProductPageImage key={product.id}>
-          {" "}
-          <div>
-            <img
-              style={{ width: "550px", height: "550px" }}
-              src={product.image}
-              alt={product.title}
-            />
-          </div>
-          <SProductPagePrice>
-            {" "}
-            <p>{product.description}</p>
-            <span>{product.price} ₾</span>
-            <SProductPageAddToCart onClick={() => addToCart(product.id)}>
-              კალათაში დამატება
-            </SProductPageAddToCart>
-            <SProductPageCheckOut onClick={() => handlePurchase()}>
-              ყიდვა
-            </SProductPageCheckOut>
-          </SProductPagePrice>
-        </SProductPageImage>
-      ))}
+      <SProductPageImage>
+        <div>
+          <img
+            style={{ width: "550px", height: "550px" }}
+            src={product.image}
+            alt={product.title}
+          />
+        </div>
+        <SProductPagePrice>
+          <p>{product.description}</p>
+          {product.salePrice !== null ? (
+            <>
+              <span style={{ color: "black" }}>
+                <s>{product.price} ₾</s>
+              </span>
+              <span>
+                <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
+                {product.salePrice} ₾
+              </span>
+            </>
+          ) : (
+            <span style={{ marginBottom: "25px" }}>{product.price} ₾</span>
+          )}
+          <SProductPageAddToCart onClick={() => addToCart(product.id)}>
+            კალათაში დამატება
+          </SProductPageAddToCart>
+        </SProductPagePrice>
+      </SProductPageImage>
     </SProductPage>
   );
 }

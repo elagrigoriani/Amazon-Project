@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { IProducts } from "../../shared/types";
 import { useCart } from "../../../../../hooks/useCart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,11 +30,8 @@ export function Audio() {
 
   useEffect(() => {
     getProducts("აუდიო");
-  }, []);
-
-  useEffect(() => {
     window.scrollTo(0, 0);
-  }, [currentPage]);
+  }, []);
 
   async function getProducts(categoryName: string) {
     try {
@@ -55,6 +52,7 @@ export function Audio() {
 
   const handlePurchase = (productId: string) => {
     navigate(`/productpage/${productId}`);
+    window.scrollTo(0, 0);
   };
 
   const sortedProducts = [...products].sort((a, b) => {
@@ -126,41 +124,57 @@ export function Audio() {
           .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
           .map((product: IProducts) => (
             <SSmartphone key={product.id}>
-              <button
-                style={{ border: "none", backgroundColor: "transparent" }}
-                onClick={() => handlePurchase(product.id)}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  padding: "3px",
+                }}
               >
-                <img src={product.image} alt={product.title} />
-              </button>
-              {product.salePrice !== null ? (
-                <>
-                  <span style={{ color: "black" }}>
-                    <s>{product.price} ₾</s>
+                <button
+                  style={{ border: "none", backgroundColor: "transparent" }}
+                  onClick={() => handlePurchase(product.id)}
+                >
+                  <img src={product.image} alt={product.title} />
+                </button>
+                {product.salePrice !== null ? (
+                  <>
+                    <span style={{ color: "black" }}>
+                      <s>{product.price} ₾</s>
+                    </span>
+                    <span>
+                      <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
+                      {product.salePrice} ₾
+                    </span>
+                  </>
+                ) : (
+                  <span style={{ marginBottom: "25px" }}>
+                    {product.price} ₾
                   </span>
-                  <span>
-                    <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
-                    {product.salePrice} ₾
-                  </span>
-                </>
-              ) : (
-                <span>{product.price} ₾</span>
-              )}
-              <p>{product.description}</p>
-              <div style={{ display: "flex" }}>
-                <div>
-                  <button onClick={() => addToCart(product.id)}>
-                    კალათაში დამატება
-                  </button>{" "}
-                </div>
-                <div>
-                  <LikeButton onClick={() => addToLike(product.id)}>
-                    {
-                      <FontAwesomeIcon
-                        icon={faHeart}
-                        style={{ color: "#ff9900" }}
-                      />
-                    }
-                  </LikeButton>
+                )}
+                <p>{product.description}</p>
+                <div
+                  style={{
+                    display: "flex",
+                    marginTop: "40px",
+                  }}
+                >
+                  <div>
+                    <button onClick={() => addToCart(product.id)}>
+                      კალათაში დამატება
+                    </button>{" "}
+                  </div>
+                  <div>
+                    <LikeButton onClick={() => addToLike(product.id)}>
+                      {
+                        <FontAwesomeIcon
+                          icon={faHeart}
+                          style={{ color: "#ff9900" }}
+                        />
+                      }
+                    </LikeButton>
+                  </div>
                 </div>
               </div>
             </SSmartphone>

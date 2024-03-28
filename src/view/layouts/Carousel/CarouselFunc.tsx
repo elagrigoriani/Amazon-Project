@@ -14,11 +14,13 @@ import {
 import { useLike } from "../../../hooks/useLike";
 import "react-slideshow-image/dist/styles.css";
 import { Slide } from "react-slideshow-image";
+import { useNavigate } from "react-router-dom";
 
 export function CarouselFunc() {
   const [products, setProducts] = useState<IProducts[]>([]);
   const { cartProducts, addToCart } = useCart();
   const { likeProducts, addToLike } = useLike();
+  const navigate = useNavigate();
   console.log(cartProducts, likeProducts);
   async function getProducts() {
     try {
@@ -38,7 +40,10 @@ export function CarouselFunc() {
   useEffect(() => {
     getProducts();
   }, []);
-
+  const handlePurchase = (productId: string) => {
+    navigate(`/productpage/${productId}`);
+    window.scrollTo(0, 0);
+  };
   return (
     <>
       <Carousel autoplay>
@@ -81,7 +86,12 @@ export function CarouselFunc() {
               (product: IProducts) =>
                 product.salePrice && (
                   <SSmartphone key={product.id}>
-                    <img src={product.image} alt={product.title} />
+                    <button
+                      style={{ border: "none", backgroundColor: "transparent" }}
+                      onClick={() => handlePurchase(product.id)}
+                    >
+                      <img src={product.image} alt={product.title} />
+                    </button>
                     <>
                       <span style={{ color: "black" }}>
                         <s>{product.price} ₾</s>

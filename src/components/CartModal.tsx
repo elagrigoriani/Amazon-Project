@@ -12,6 +12,7 @@ import {
   CartProductTitle,
 } from "./CartModal.styled";
 import { ICartProduct } from "../view/layouts/Navigation/shared/types";
+import { calculateTotal } from "../utils/cartUtils";
 
 type CartModalProp = {
   onCancel: () => void;
@@ -37,16 +38,9 @@ export function CartModal({
   }, []);
 
   useEffect(() => {
-    if (cartProducts) {
-      let total = 0;
-      let items = 0;
-      cartProducts.forEach((product) => {
-        total += product.count * product.cartProduct.price;
-        items += product.count;
-      });
-      setTotalPrice(total);
-      setTotalItems(items);
-    }
+    const { totalPrice, totalItems } = calculateTotal(cartProducts);
+    setTotalPrice(totalPrice);
+    setTotalItems(totalItems);
   }, [cartProducts]);
 
   const handlePurchase = () => {
@@ -93,7 +87,26 @@ export function CartModal({
                   {product.cartProduct.description}
                 </CartProductTitle>
                 <CartProductPrice>
-                  {product.cartProduct.price} <span> ₾ </span>
+                  {product.cartProduct.salePrice !== null ? (
+                    <>
+                      <span style={{ color: "black" }}>
+                        <s>
+                          {" "}
+                          <b>{product.cartProduct.price} ₾ </b>
+                        </s>
+                      </span>
+                      <span>
+                        <span style={{ color: "red" }}>
+                          <b>ფასდაკლება</b>
+                        </span>{" "}
+                        <b>{product.cartProduct.salePrice} ₾</b>
+                      </span>
+                    </>
+                  ) : (
+                    <span style={{ marginBottom: "25px" }}>
+                      <b>{product.cartProduct.price} ₾</b>
+                    </span>
+                  )}
                 </CartProductPrice>
                 <CartButtonsWrapper>
                   <Button
