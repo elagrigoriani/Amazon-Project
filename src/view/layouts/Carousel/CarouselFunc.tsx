@@ -13,8 +13,10 @@ import {
 } from "../../../view/layouts/Navigation/Pages/Smartphone/SSmartphone.styled";
 import { useLike } from "../../../hooks/useLike";
 import "react-slideshow-image/dist/styles.css";
-import { Slide } from "react-slideshow-image";
 import { useNavigate } from "react-router-dom";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 
 export function CarouselFunc() {
   const [products, setProducts] = useState<IProducts[]>([]);
@@ -80,51 +82,62 @@ export function CarouselFunc() {
       </Carousel>
       <div>
         <h1>ფასდაკლებული პროდუქტები</h1>
-        <Slide>
+        <Swiper
+          spaceBetween={30}
+          slidesPerView={4}
+          onSlideChange={() => console.log("slide change")}
+          onSwiper={(swiper) => console.log(swiper)}
+        >
           <SWrapper>
             {products.map(
               (product: IProducts) =>
                 product.salePrice && (
-                  <SSmartphone key={product.id}>
-                    <button
-                      style={{ border: "none", backgroundColor: "transparent" }}
-                      onClick={() => handlePurchase(product.id)}
-                    >
-                      <img src={product.image} alt={product.title} />
-                    </button>
-                    <>
-                      <span style={{ color: "black" }}>
-                        <s>{product.price} ₾</s>
-                      </span>
-                      <span>
-                        <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
-                        {product.salePrice} ₾
-                      </span>
-                    </>
+                  <SwiperSlide key={product.id}>
+                    <SSmartphone>
+                      <button
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                        }}
+                        onClick={() => handlePurchase(product.id)}
+                      >
+                        <img src={product.image} alt={product.title} />
+                      </button>
+                      <>
+                        <span style={{ color: "black" }}>
+                          <s>{product.price} ₾</s>
+                        </span>
+                        <span>
+                          <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
+                          {product.salePrice} ₾
+                        </span>
+                      </>
 
-                    <p>{product.description}</p>
-                    <div style={{ display: "flex" }}>
-                      <div>
-                        <button onClick={() => addToCart(product.id)}>
-                          კალათაში დამატება
-                        </button>{" "}
+                      <p>{product.description}</p>
+                      <div style={{ display: "flex" }}>
+                        <div>
+                          <button onClick={() => addToCart(product.id)}>
+                            კალათაში დამატება
+                          </button>{" "}
+                        </div>
+                        <div>
+                          <LikeButton onClick={() => addToLike(product.id)}>
+                            {
+                              <FontAwesomeIcon
+                                icon={faHeart}
+                                style={{ color: "#ff9900" }}
+                              />
+                            }
+                          </LikeButton>
+                        </div>
                       </div>
-                      <div>
-                        <LikeButton onClick={() => addToLike(product.id)}>
-                          {
-                            <FontAwesomeIcon
-                              icon={faHeart}
-                              style={{ color: "#ff9900" }}
-                            />
-                          }
-                        </LikeButton>
-                      </div>
-                    </div>
-                  </SSmartphone>
+                    </SSmartphone>
+                  </SwiperSlide>
                 )
             )}
           </SWrapper>
-        </Slide>
+        </Swiper>
+        ;
       </div>
     </>
   );

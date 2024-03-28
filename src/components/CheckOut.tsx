@@ -115,6 +115,9 @@ export function CheckOut() {
       )}
       <div style={{ marginLeft: "20px", marginTop: "20px" }}>
         პროდუქტები საერთო ღირებულება: <b>{totalPrice} ლ</b>
+        <div>
+          მისამართი: <input />
+        </div>
       </div>
       <button
         style={{
