@@ -1,4 +1,18 @@
-import { SFooter, SContent, SLink, SBackground } from "./SFooter.styled";
+import {
+  SFooter,
+  SContent,
+  SLink,
+  SBackground,
+  SSocial,
+  SSocialIcons,
+  SLanguage,
+} from "./SFooter.styled";
+import Facebook from "../../../../images/facebook.png";
+import Instagram from "../../../../images/instagram.png";
+import Youtube from "../../../../images/youtube.png";
+import Twitter from "../../../../images/twitter.png";
+import Tiktok from "../../../../images/tiktok.png";
+import Language from "../../../../images/language.png";
 
 export function Footer() {
   return (
@@ -119,6 +133,60 @@ export function Footer() {
           </SLink>
         </SContent>
       </SFooter>
+      <SSocial>
+        <SSocialIcons>
+          <a href="https://www.facebook.com/" target="_blank">
+            <img src={Facebook} alt="facebook" />
+          </a>
+        </SSocialIcons>
+        <SSocialIcons>
+          <a href="https://www.instgram.com/" target="_blank">
+            <img src={Instagram} alt="instagram" />
+          </a>
+        </SSocialIcons>
+        <SSocialIcons>
+          <a href="https://www.youtube.com/" target="_blank">
+            <img src={Youtube} alt="youtube" />
+          </a>
+        </SSocialIcons>
+        <SSocialIcons>
+          <a href="https://www.twitter.com/" target="_blank">
+            <img src={Twitter} alt="twitter" />
+          </a>
+        </SSocialIcons>
+        <SSocialIcons>
+          <a href="https://www.tiktok.com/" target="_blank">
+            <img src={Tiktok} alt="tiktok" />
+          </a>
+        </SSocialIcons>
+      </SSocial>
+      <SLanguage>
+        <SSocial style={{ border: "none" }}>
+          <img
+            src={Language}
+            alt="language"
+            style={{
+              width: "24px",
+              height: "24px",
+              marginTop: "3px",
+              marginRight: "5px",
+            }}
+          />
+          <select
+            name="language"
+            id="language"
+            style={{
+              backgroundColor: "#131a22",
+              padding: "6px",
+              borderRadius: "5px",
+              color: "#ddd",
+            }}
+          >
+            <option value="language">English - EN</option>
+            <option value="georgian">Georgian - GE</option>
+          </select>
+        </SSocial>
+      </SLanguage>
     </SBackground>
   );
 }

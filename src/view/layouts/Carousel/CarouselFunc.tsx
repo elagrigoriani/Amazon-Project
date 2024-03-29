@@ -81,7 +81,17 @@ export function CarouselFunc() {
         </SCarouselFunc>
       </Carousel>
       <div>
-        <h1>ფასდაკლებული პროდუქტები</h1>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            color: "#ff9900",
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+        >
+          <h1>ფასდაკლებული პროდუქტები</h1>
+        </div>
         <Swiper
           spaceBetween={30}
           slidesPerView={4}

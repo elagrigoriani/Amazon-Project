@@ -55,7 +55,9 @@ export function ProductPage() {
                 <s>{product.price} ₾</s>
               </span>
               <span>
-                <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
+                <span style={{ color: "red", marginLeft: "5px" }}>
+                  ფასდაკლება
+                </span>{" "}
                 {product.salePrice} ₾
               </span>
             </>
