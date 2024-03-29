@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const SLayoutHeader = styled.div`
+  width: 100%;
   background-color: #141920;
   padding: 16px;
   display: flex;

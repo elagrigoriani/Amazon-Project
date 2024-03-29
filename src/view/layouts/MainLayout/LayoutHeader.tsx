@@ -35,42 +35,57 @@ export function LayoutHeader() {
   return (
     <div>
       <SLayoutHeader>
-        <a href="/">
-          <img src={Logo} alt="ლოგო" />
-        </a>
-
-        <Search />
-        {showCartModal && (
-          <CartModal
-            cartProducts={cartProducts as any}
-            onCancel={() => setShowCartModal(false)}
-            addToCart={addToCart}
-            removeFromCart={removeFromCart}
-            getCartProducts={getCartProducts}
-          />
-        )}
-        <button
-          className="cart-button"
-          onClick={() => setShowCartModal(true)}
-          style={{ cursor: "pointer" }}
-        >
-          <img src={cartImage} alt="img" />
-        </button>
-        <button
-          className="cart-button"
-          onClick={() => setShowLikeModal(true)}
+        <div
           style={{
-            cursor: "pointer",
+            padding: "5px",
+            marginTop: "5px",
           }}
         >
-          <FontAwesomeIcon
-            icon={faHeart}
+          <a href="/">
+            <img src={Logo} alt="ლოგო" />
+          </a>
+        </div>
+        <div style={{ width: "65%" }}>
+          {" "}
+          <Search />
+        </div>
+        <div>
+          {showCartModal && (
+            <CartModal
+              cartProducts={cartProducts as any}
+              onCancel={() => setShowCartModal(false)}
+              addToCart={addToCart}
+              removeFromCart={removeFromCart}
+              getCartProducts={getCartProducts}
+            />
+          )}
+          <button
+            className="cart-button"
+            onClick={() => setShowCartModal(true)}
             style={{
-              color: "white",
-              padding: "8px",
+              cursor: "pointer",
+              marginRight: "30px",
+              marginTop: "2px",
             }}
-          />
-        </button>
+          >
+            <img src={cartImage} alt="img" />
+          </button>
+          <button
+            className="cart-button"
+            onClick={() => setShowLikeModal(true)}
+            style={{
+              cursor: "pointer",
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faHeart}
+              style={{
+                color: "white",
+                padding: "8px",
+              }}
+            />
+          </button>
+        </div>
         <Space>
           {authStage === TAuthorizationStage_Enum.AUTHORIZED ? (
             <div>
@@ -139,6 +154,7 @@ export function LayoutHeader() {
         {showSignIn && <SignInModal onCancel={() => setShowSignIn(false)} />}
         {showSignUp && <SignUpModal onCancel={() => setShowSignUp(false)} />}
       </SLayoutHeader>
+
       {showLikeModal && (
         <LikeModal
           likeProducts={likeProducts as any}
