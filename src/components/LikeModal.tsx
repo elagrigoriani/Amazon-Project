@@ -1,10 +1,8 @@
 import { ILikeProduct } from "../view/layouts/Navigation/shared/types";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Modal, Button } from "antd";
 
 import {
-  CartButtonsWrapper,
-  CartCount,
   CartProductDesc,
   CartProductImage,
   CartProductInfo,
@@ -27,27 +25,13 @@ export function LikeModal({
   removeFromLike,
   getLikeProducts,
 }: LikeModalProp) {
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [totalItems, setTotalItems] = useState<number>(0);
-
   useEffect(() => {
     getLikeProducts();
   }, []);
 
   useEffect(() => {
-    if (likeProducts) {
-      let total = 0;
-      let items = 0;
-      likeProducts.forEach((product) => {
-        if (product.likedProduct) {
-          total += product.count * product.likedProduct.price;
-          items += product.count;
-        }
-      });
-      setTotalPrice(total);
-      setTotalItems(items);
-    }
-  }, [likeProducts]);
+    getLikeProducts();
+  }, []);
 
   return (
     <Modal
@@ -70,10 +54,12 @@ export function LikeModal({
         },
       }}
     >
-      {likeProducts?.map((product: ILikeProduct, index: number) => {
-        console.log("პროდუქტი", product);
-        return (
-          <CartProductRow key={index}>
+      <div style={{ margin: "auto", color: "#FF9900" }}>
+        <h1>მოწონებული პროდუქტები</h1>
+      </div>
+      {likeProducts?.map((product: ILikeProduct, index: number) => (
+        <div key={index}>
+          <CartProductRow>
             <CartProductInfo style={{ width: "100%" }}>
               {product.likedProduct && (
                 <>
@@ -87,13 +73,28 @@ export function LikeModal({
                     <CartProductTitle>
                       {product.likedProduct.description}
                     </CartProductTitle>
-                    <CartProductPrice
-                      style={{
-                        padding: "5px",
-                      }}
-                    >
+                    <CartProductPrice style={{ padding: "5px" }}>
                       <div style={{ marginTop: "5px" }}>
-                        {product.likedProduct.price} <span> ₾ </span>{" "}
+                        {product.likedProduct.salePrice !== null ? (
+                          <>
+                            <span style={{ color: "black" }}>
+                              <s>
+                                {" "}
+                                <b>{product.likedProduct.price} ₾ </b>
+                              </s>
+                            </span>
+                            <span>
+                              <span style={{ color: "red" }}>
+                                <b>ფასდაკლება</b>
+                              </span>{" "}
+                              <b>{product.likedProduct.salePrice} ₾</b>
+                            </span>
+                          </>
+                        ) : (
+                          <span style={{ marginBottom: "25px" }}>
+                            <b>{product.likedProduct.price} ₾</b>
+                          </span>
+                        )}
                       </div>
                       <Button
                         style={{
@@ -112,8 +113,8 @@ export function LikeModal({
               )}
             </CartProductInfo>
           </CartProductRow>
-        );
-      })}
+        </div>
+      ))}
     </Modal>
   );
 }

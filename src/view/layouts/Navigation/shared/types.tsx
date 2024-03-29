@@ -32,6 +32,7 @@ export type ICartProduct = {
 };
 
 export type ILikeProduct = {
+  cartProduct: any;
   map(
     arg0: (
       product: ILikeProduct,

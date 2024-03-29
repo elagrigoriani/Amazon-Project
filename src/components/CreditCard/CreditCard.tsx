@@ -228,6 +228,11 @@ export function CreditCard() {
                   type="submit"
                   value="გადახდა"
                   className="Submit"
+                  style={{
+                    padding: "12px 100px",
+                    marginTop: "30px",
+                    fontWeight: "bold",
+                  }}
                 />
               </div>
             </div>
@@ -244,7 +249,7 @@ export function CreditCard() {
               background: "white",
               padding: "20px",
               borderRadius: "5px",
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.4)",
               paddingTop: "50px",
               paddingRight: "50px",
               paddingLeft: "50px",

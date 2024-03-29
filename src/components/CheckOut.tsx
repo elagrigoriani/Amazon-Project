@@ -18,8 +18,15 @@ export function CheckOut() {
   const navigate = useNavigate();
   const { cartProducts, getCartProducts } = useCart();
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [address, setAddress] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const deliveryPrice = 5;
 
   const handlePurchase = () => {
+    if (!address) {
+      setError("გთხოვთ შეიყვანოთ მისამართი");
+      return;
+    }
     fetch("http://localhost:3000/purchases", {
       method: "POST",
       headers: {
@@ -53,9 +60,7 @@ export function CheckOut() {
         paddingTop: "20px",
       }}
     >
-      <h2 style={{ marginLeft: "20px", color: "#FF9900", marginTop: "20px" }}>
-        ყიდვის გვერდი
-      </h2>
+      <h2 style={{ marginLeft: "20px", color: "#FF9900" }}>ყიდვის გვერდი</h2>
       {cartProducts ? (
         cartProducts.map((product: ICartProduct, index: number) => (
           <div key={index}>
@@ -113,37 +118,84 @@ export function CheckOut() {
       ) : (
         <p>არ არის პროდუქტები</p>
       )}
-      <div style={{ marginLeft: "20px", marginTop: "20px" }}>
-        პროდუქტები საერთო ღირებულება: <b>{totalPrice} ლ</b>
-        <div>
-          მისამართი: <input />
+      <div
+        style={{
+          marginLeft: "20px",
+          marginTop: "20px",
+          width: "30%",
+          margin: "auto",
+        }}
+      >
+        <div style={{ marginBottom: "10px" }}>
+          მისამართი:{" "}
+          <input
+            placeholder="მისამართი"
+            style={{ borderRadius: "5px", padding: "3px", width: "80%" }}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          {error && <p style={{ color: "red" }}>{error}</p>}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <div style={{ textAlign: "left", lineHeight: "30px" }}>
+            <p>პროდუქტები საერთო ღირებულება:</p>
+            <p>ადგილზე მოტანის ღირებულება:</p>
+          </div>
+          <div
+            style={{
+              backgroundColor: "#fff",
+              textAlign: "right",
+              lineHeight: "30px",
+            }}
+          >
+            <p>
+              <b>{totalPrice} ₾</b>
+            </p>
+            <p>
+              <b>{deliveryPrice} ₾</b>
+            </p>
+            <p>
+              <b style={{ fontSize: "20px" }}>
+                <span style={{ color: "#ff9900" }}>ჯამი:</span>{" "}
+                {totalPrice + deliveryPrice} ₾
+              </b>
+            </p>
+          </div>
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <button
+            style={{
+              border: "1px solid #FF9900",
+              backgroundColor: "#FF9900",
+              color: "white",
+              padding: "12px 100px",
+              margin: "30px 0px",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "transparent";
+              e.target.style.borderColor = "#FF9900";
+              e.target.style.color = "#FF9900";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "#FF9900";
+              e.target.style.borderColor = "white";
+              e.target.style.color = "white";
+            }}
+            onClick={() => handlePurchase()}
+          >
+            ყიდვა
+          </button>
         </div>
       </div>
-      <button
-        style={{
-          border: "1px solid #FF9900",
-          backgroundColor: "#FF9900",
-          color: "white",
-          padding: "12px 20px",
-          margin: "20px",
-          borderRadius: "8px",
-          cursor: "pointer",
-          fontWeight: "bold",
-        }}
-        onMouseEnter={(e) => {
-          e.target.style.backgroundColor = "transparent";
-          e.target.style.borderColor = "#FF9900";
-          e.target.style.color = "#FF9900";
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.backgroundColor = "#FF9900";
-          e.target.style.borderColor = "white";
-          e.target.style.color = "white";
-        }}
-        onClick={() => handlePurchase()}
-      >
-        ყიდვა
-      </button>
     </div>
   );
 }
