@@ -18,9 +18,20 @@ export function CheckOut() {
   const navigate = useNavigate();
   const { cartProducts, getCartProducts } = useCart();
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [totalItem, setTotalItem] = useState<number>(0);
   const [address, setAddress] = useState<string>("");
   const [error, setError] = useState<string>("");
   const deliveryPrice = 5;
+
+  console.log("testt", cartProducts);
+
+  const testData = cartProducts && {
+    id: cartProducts[0].id,
+    created_at: cartProducts[0].created_at,
+    updated_at: cartProducts[0].updated_at,
+    totalItems: totalItem,
+    totalPrice: totalPrice,
+  };
 
   const handlePurchase = () => {
     if (!address) {
@@ -32,7 +43,7 @@ export function CheckOut() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(cartProducts),
+      body: cartProducts && JSON.stringify(testData),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -49,8 +60,9 @@ export function CheckOut() {
   }, []);
 
   useEffect(() => {
-    const { totalPrice } = calculateTotal(cartProducts);
+    const { totalPrice, totalItems } = calculateTotal(cartProducts);
     setTotalPrice(totalPrice);
+    setTotalItem(totalItems);
   }, [cartProducts]);
   return (
     <div

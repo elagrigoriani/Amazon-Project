@@ -249,7 +249,7 @@ export function CreditCard() {
               background: "white",
               padding: "20px",
               borderRadius: "5px",
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.4)",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.)",
               paddingTop: "50px",
               paddingRight: "50px",
               paddingLeft: "50px",
@@ -291,8 +291,7 @@ export function CreditCard() {
                   e.target.style.color = "white";
                 }}
                 onClick={() => {
-                  setShowSuccessModal(false);
-                  navigate("/orders");
+                  handlePurchase();
                 }}
               >
                 დახურვა
