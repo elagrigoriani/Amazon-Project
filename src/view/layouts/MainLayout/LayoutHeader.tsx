@@ -19,6 +19,9 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useLike } from "../../../hooks/useLike";
 import { Avatar, Button, ConfigProvider, Popover, Space } from "antd";
 import { LikeModal } from "../../../components/LikeModal";
+import { useContext } from "react";
+import { LocaleContext } from "../../../provider/LocaleProvider/LocaleContext";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export function LayoutHeader() {
   const { authStage, userData, logout } = useAuthProvider();
@@ -31,6 +34,8 @@ export function LayoutHeader() {
     useCart();
   const { likeProducts, addToLike, removeFromLike, getLikeProducts } =
     useLike();
+  const { formatMessage } = useIntl();
+  const { toggleLocale } = useContext(LocaleContext);
 
   return (
     <div>
@@ -105,17 +110,23 @@ export function LayoutHeader() {
                       }}
                     >
                       <Button
-                        onClick={() => navigate("/orders")}
+                        onClick={() => {
+                          navigate("/orders");
+                          toggleLocale();
+                        }}
                         style={{ marginBottom: "5px" }}
                       >
-                        შეკვეთები
+                        <FormattedMessage id="orders" />
                       </Button>
 
                       <Button
-                        onClick={() => navigate("/profile")}
+                        onClick={() => {
+                          navigate("/profile");
+                          toggleLocale();
+                        }}
                         style={{ marginBottom: "5px" }}
                       >
-                        პროფილი
+                        <FormattedMessage id="profile" />
                       </Button>
                       <Button type="primary" onClick={logout}>
                         გამოსვლა
@@ -138,14 +149,23 @@ export function LayoutHeader() {
                   },
                 }}
               >
-                <Button type="primary" onClick={() => setShowSignIn(true)}>
-                  შესვლა
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setShowSignIn(true);
+                    toggleLocale();
+                  }}
+                >
+                  <FormattedMessage id="logIn" />
                 </Button>
                 <Button
-                  onClick={() => setShowSignUp(true)}
+                  onClick={() => {
+                    setShowSignUp(true);
+                    toggleLocale();
+                  }}
                   style={{ marginLeft: "8px" }}
                 >
-                  რეგისტრაცია
+                  <FormattedMessage id="registration" />
                 </Button>
               </ConfigProvider>
             </div>

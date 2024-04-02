@@ -13,8 +13,13 @@ import Youtube from "../../../../images/youtube.png";
 import Twitter from "../../../../images/twitter.png";
 import Tiktok from "../../../../images/tiktok.png";
 import Language from "../../../../images/language.png";
+import { useContext } from "react";
+import { LocaleContext } from "../../../../provider/LocaleProvider/LocaleContext";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export function Footer() {
+  const { formatMessage } = useIntl();
+  const { toggleLocale } = useContext(LocaleContext);
   return (
     <SBackground>
       <SFooter>
@@ -172,19 +177,9 @@ export function Footer() {
               marginRight: "5px",
             }}
           />
-          <select
-            name="language"
-            id="language"
-            style={{
-              backgroundColor: "#131a22",
-              padding: "6px",
-              borderRadius: "5px",
-              color: "#ddd",
-            }}
-          >
-            <option value="language">English - EN</option>
-            <option value="georgian">Georgian - GE</option>
-          </select>
+          <button onClick={() => toggleLocale()}>
+            <FormattedMessage id="change.language" />
+          </button>
         </SSocial>
       </SLanguage>
     </SBackground>

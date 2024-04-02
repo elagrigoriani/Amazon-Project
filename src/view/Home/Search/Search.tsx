@@ -9,7 +9,7 @@ export function Search() {
 
   function onSearch() {
     if (searchKeyword.length > 3) {
-      navigate(`/${searchKeyword}`);
+      navigate(`/${y}`);
     }
   }
 
