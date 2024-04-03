@@ -14,6 +14,7 @@ import {
 } from ".././Smartphone/SSmartphone.styled";
 import { useLike } from "../../../../../hooks/useLike";
 import { useNavigate } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 export function Smartphone() {
   const [products, setProducts] = useState<IProducts[]>([]);
@@ -95,7 +96,7 @@ export function Smartphone() {
     <>
       <div>
         <label style={{ margin: "5px" }}>
-          ფილტრი ფასის მიხედვით
+          <FormattedMessage id="filter" />
           <select
             style={{
               padding: "5px",
@@ -112,10 +113,10 @@ export function Smartphone() {
             }
           >
             <option value="lowestToHighest" className="custom-option">
-              ზრდადობით დალაგება
+              <FormattedMessage id="LtH" />
             </option>
             <option value="highestToLowest" className="custom-option">
-              კლებადობით დალაგება
+              <FormattedMessage id="HtL" />
             </option>
           </select>
         </label>
@@ -146,7 +147,10 @@ export function Smartphone() {
                       <s>{product.price} ₾</s>
                     </span>
                     <span>
-                      <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
+                      <span style={{ color: "red" }}>
+                        {" "}
+                        <FormattedMessage id="sale" />
+                      </span>{" "}
                       {product.salePrice} ₾
                     </span>
                   </>
@@ -164,7 +168,7 @@ export function Smartphone() {
                 >
                   <div>
                     <button onClick={() => addToCart(product.id)}>
-                      კალათაში დამატება
+                      <FormattedMessage id="addToCart" />
                     </button>{" "}
                   </div>
                   <div>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
 
 export function Orders() {
   const [orderHistory, setOrderHistory] = useState([]);
-
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
@@ -37,7 +37,7 @@ export function Orders() {
             justifyContent: "center",
           }}
         >
-          შეკვეთების ისტორია{" "}
+          <FormattedMessage id="orderhistory" />
         </h2>
         {orderHistory.length > 0 ? (
           <div>
@@ -54,17 +54,26 @@ export function Orders() {
                 {}
 
                 <p>
-                  <b>შეკვეთის ნომერი</b> {order.id}
+                  <b>
+                    {" "}
+                    <FormattedMessage id="ordernumber" />:
+                  </b>{" "}
+                  {order.id}
                 </p>
                 <p>
-                  <b> შეკვეთის თარიღი </b>
+                  <b>
+                    {" "}
+                    <FormattedMessage id="orderdate" />:{" "}
+                  </b>
                   {new Date(order.created_at).toLocaleString()}
                 </p>
               </div>
             ))}
           </div>
         ) : (
-          <p>შეკვეთების ისტორია ცარიელია</p>
+          <p>
+            <FormattedMessage id="orderhistoryempy" />
+          </p>
         )}
       </div>
     </div>

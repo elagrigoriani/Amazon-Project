@@ -3,6 +3,7 @@ import { Modal, Form, Input, Button, Alert } from "antd";
 import { TAuthRequest } from "../../@types/requestTypes";
 import { publicAxios } from "../../utils/publicAxios";
 import { useAuthProvider } from "../../provider/AuthProvider";
+import { FormattedMessage, useIntl } from "react-intl";
 
 type SignInModalProps = {
   onCancel: () => void;
@@ -17,6 +18,7 @@ export function SignInModal({ onCancel }: SignInModalProps) {
   const { setAuthData } = useAuthProvider();
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState<boolean>();
+  const { formatMessage } = useIntl();
 
   async function onFinish(values: SignInFormValue) {
     try {
@@ -33,7 +35,7 @@ export function SignInModal({ onCancel }: SignInModalProps) {
 
   return (
     <Modal
-      title="შესვლა"
+      title={formatMessage({ id: "signin" })}
       centered={true}
       onCancel={onCancel}
       open={true}
@@ -45,7 +47,7 @@ export function SignInModal({ onCancel }: SignInModalProps) {
           htmlType="submit"
           style={{ backgroundColor: "#FF9900" }}
         >
-          შესვლა
+          <FormattedMessage id="signin" />
         </Button>
       }
     >
@@ -60,7 +62,7 @@ export function SignInModal({ onCancel }: SignInModalProps) {
           rules={[
             {
               required: true,
-              message: "გთხოვთ შეიყვანოთ თქვენი ელექტრონული ფოსტა!",
+              message: formatMessage({ id: "emailerror" }),
             },
           ]}
         >
@@ -68,19 +70,16 @@ export function SignInModal({ onCancel }: SignInModalProps) {
         </Form.Item>
 
         <Form.Item
-          label="პაროლი"
+          label={formatMessage({ id: "password" })}
           name="password"
           rules={[
-            { required: true, message: "გთხოვთ შეიყვანოთ თქვენი პაროლი!" },
+            { required: true, message: formatMessage({ id: "passworderror" }) },
           ]}
         >
           <Input.Password />
         </Form.Item>
         {authError && (
-          <Alert
-            type="error"
-            message="მომხმარებლის email ან პაროლი არასწორია"
-          />
+          <Alert type="error" message={formatMessage({ id: "signinerror" })} />
         )}
       </Form>
     </Modal>

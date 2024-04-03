@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../images/logo.png";
 import cartImage from "../../../images/cart.png";
+import Language from "../../../images/language.png";
 
 import { SLayoutHeader } from "./SLayoutHeader.styled";
 
@@ -50,7 +51,26 @@ export function LayoutHeader() {
             <img src={Logo} alt="ლოგო" />
           </a>
         </div>
-        <div style={{ width: "65%" }}>
+
+        <img
+          src={Language}
+          alt="language"
+          style={{
+            width: "24px",
+            height: "24px",
+            marginTop: "12px",
+          }}
+        />
+        <button
+          className="cart-button"
+          onClick={() => toggleLocale()}
+          style={{
+            color: "white",
+          }}
+        >
+          <FormattedMessage id="change.language" />
+        </button>
+        <div style={{ width: "65%", marginTop: "5px" }}>
           {" "}
           <Search />
         </div>
@@ -68,7 +88,6 @@ export function LayoutHeader() {
             className="cart-button"
             onClick={() => setShowCartModal(true)}
             style={{
-              cursor: "pointer",
               marginRight: "30px",
               marginTop: "2px",
             }}
@@ -78,9 +97,6 @@ export function LayoutHeader() {
           <button
             className="cart-button"
             onClick={() => setShowLikeModal(true)}
-            style={{
-              cursor: "pointer",
-            }}
           >
             <FontAwesomeIcon
               icon={faHeart}
@@ -112,7 +128,6 @@ export function LayoutHeader() {
                       <Button
                         onClick={() => {
                           navigate("/orders");
-                          toggleLocale();
                         }}
                         style={{ marginBottom: "5px" }}
                       >
@@ -129,7 +144,7 @@ export function LayoutHeader() {
                         <FormattedMessage id="profile" />
                       </Button>
                       <Button type="primary" onClick={logout}>
-                        გამოსვლა
+                        <FormattedMessage id="logout" />
                       </Button>
                     </div>
                   </ConfigProvider>
@@ -153,19 +168,17 @@ export function LayoutHeader() {
                   type="primary"
                   onClick={() => {
                     setShowSignIn(true);
-                    toggleLocale();
                   }}
                 >
-                  <FormattedMessage id="logIn" />
+                  <FormattedMessage id="signin" />
                 </Button>
                 <Button
                   onClick={() => {
                     setShowSignUp(true);
-                    toggleLocale();
                   }}
                   style={{ marginLeft: "8px" }}
                 >
-                  <FormattedMessage id="registration" />
+                  <FormattedMessage id="signup" />
                 </Button>
               </ConfigProvider>
             </div>

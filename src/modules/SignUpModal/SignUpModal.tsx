@@ -3,6 +3,7 @@ import { publicAxios } from "../../utils/publicAxios";
 import { useAuthProvider } from "../../provider/AuthProvider";
 import { TAuthRequest } from "../../@types/requestTypes";
 import { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 type SignUpModalProps = {
   onCancel: () => void;
@@ -21,13 +22,14 @@ export function SignUpModal({ onCancel }: SignUpModalProps) {
   const [form] = Form.useForm();
   const [authLoading, setAuthLoading] = useState(false);
   const { setAuthData } = useAuthProvider();
+  const { formatMessage } = useIntl();
 
   async function onFinish(values: SignUpFormValue) {
     if (values.password !== values["repeat_password"]) {
       form.setFields([
         {
           name: "repeat_password",
-          errors: ["შემოყვანილი პაროლი არ ემთხვევა"],
+          errors: [formatMessage({ id: "repeatpassworderror" })],
         },
       ]);
       return;
@@ -45,7 +47,7 @@ export function SignUpModal({ onCancel }: SignUpModalProps) {
 
   return (
     <Modal
-      title="რეგისტრაცია"
+      title={formatMessage({ id: "signup" })}
       centered={true}
       onCancel={onCancel}
       open={true}
@@ -57,7 +59,7 @@ export function SignUpModal({ onCancel }: SignUpModalProps) {
           htmlType="submit"
           style={{ backgroundColor: "#FF9900" }}
         >
-          რეგისტრაცია
+          <FormattedMessage id="signup" />
         </Button>
       }
     >
@@ -68,28 +70,32 @@ export function SignUpModal({ onCancel }: SignUpModalProps) {
         onFinish={onFinish}
       >
         <Form.Item
-          label="სახელი"
+          label={formatMessage({ id: "name" })}
           name="first_name"
-          rules={[{ required: true, message: "გთხოვთ ჩაწეროთ თქვენი სახელი!" }]}
+          rules={[
+            { required: true, message: formatMessage({ id: "nameerror" }) },
+          ]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="გვარი"
+          label={formatMessage({ id: "lastname" })}
           name="last_name"
-          rules={[{ required: true, message: "გთხოვთ ჩაწეროთ თქვენი გვარი!" }]}
+          rules={[
+            { required: true, message: formatMessage({ id: "lastnameerror" }) },
+          ]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="ტელეფონის ნომერი"
+          label={formatMessage({ id: "phonenumber" })}
           name="phone_number"
           rules={[
             {
               required: true,
-              message: "გთხოვთ ჩაწეროთ თქვენი ტელეფონის ნომერი!",
+              message: formatMessage({ id: "phonenumbererror" }),
             },
           ]}
         >
@@ -102,7 +108,7 @@ export function SignUpModal({ onCancel }: SignUpModalProps) {
           rules={[
             {
               required: true,
-              message: "გთხოვთ ჩაწეროთ თქვენი ელექტრონული ფოსტა!",
+              message: formatMessage({ id: "emailerror" }),
             },
           ]}
         >
@@ -110,18 +116,20 @@ export function SignUpModal({ onCancel }: SignUpModalProps) {
         </Form.Item>
 
         <Form.Item
-          label="პაროლი"
+          label={formatMessage({ id: "password" })}
           name="password"
-          rules={[{ required: true, message: "გთხოვთ ჩაწეროთ თქვენი პაროლი!" }]}
+          rules={[
+            { required: true, message: formatMessage({ id: "passworderror" }) },
+          ]}
         >
           <Input.Password />
         </Form.Item>
 
         <Form.Item
-          label="გაიმეორე პაროლი"
+          label={formatMessage({ id: "repeatpassword" })}
           name="repeat_password"
           rules={[
-            { required: true, message: "გთხოვთ გაიმეოროთ თქვენი პაროლი!" },
+            { required: true, message: formatMessage({ id: "passworderror" }) },
           ]}
         >
           <Input.Password />

@@ -3,8 +3,11 @@ import {
   Label,
   SubmitButton,
 } from "../../components/CreditCard/CreditCard.styled";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export function Profile() {
+  const { formatMessage } = useIntl();
+
   return (
     <div>
       <div
@@ -27,7 +30,7 @@ export function Profile() {
               marginTop: "15px",
             }}
           >
-            პროფილის რედაქტირება
+            <FormattedMessage id="editprofile" />
           </h1>
         </div>
 
@@ -41,11 +44,19 @@ export function Profile() {
                   margin: "auto",
                 }}
               >
-                <Label>სახელი</Label>
-                <Label>გვარი</Label>
-                <Label>ტელეფონის ნომერი</Label>
+                <Label>
+                  <FormattedMessage id="name" />
+                </Label>
+                <Label>
+                  <FormattedMessage id="lastname" />
+                </Label>
+                <Label>
+                  <FormattedMessage id="phonenumber" />
+                </Label>
                 <Label>e-mail</Label>
-                <Label>პაროლი</Label>
+                <Label>
+                  <FormattedMessage id="password" />
+                </Label>
               </div>
               <div
                 style={{
@@ -55,19 +66,31 @@ export function Profile() {
                   marginTop: "35px",
                 }}
               >
-                <Input type="text" placeholder="სახელი" />
+                <Input
+                  type="text"
+                  placeholder={formatMessage({ id: "name" })}
+                />
 
-                <Input type="text" placeholder="გვარი" />
+                <Input
+                  type="text"
+                  placeholder={formatMessage({ id: "lastname" })}
+                />
 
-                <Input type="text" placeholder="ტელეფონის ნომერი" />
+                <Input
+                  type="text"
+                  placeholder={formatMessage({ id: "phonenumber" })}
+                />
 
                 <Input type="text" placeholder="e-mail" />
 
-                <Input type="text" placeholder="პაროლი" />
+                <Input
+                  type="text"
+                  placeholder={formatMessage({ id: "password" })}
+                />
 
                 <SubmitButton
                   type="submit"
-                  value="განახლება"
+                  value={formatMessage({ id: "edit" })}
                   className="Submit"
                 />
               </div>

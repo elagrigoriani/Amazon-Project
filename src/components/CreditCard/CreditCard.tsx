@@ -3,6 +3,7 @@ import Cards from "../../images/cards.png";
 import Order from "../../images/order.png";
 import { Input, Label, SubmitButton } from "./CreditCard.styled";
 import { useNavigate } from "react-router-dom";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export function CreditCard() {
   const [cardNumber, setCardNumber] = useState<string>("");
@@ -14,6 +15,7 @@ export function CreditCard() {
   const [expiryMonth, setExpiryMonth] = useState<string>("month");
   const [expiryYear, setExpiryYear] = useState<string>("year");
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+  const { formatMessage } = useIntl();
 
   const handleCardNumberChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -24,7 +26,7 @@ export function CreditCard() {
     value = value.slice(0, 19);
     setCardNumber(value);
     if (value.replace(/\s/g, "").length < 16) {
-      setCardNumberError("გთხოვთ შეიყვანოთ ბარათის ნომერი");
+      setCardNumberError(formatMessage({ id: "cardnumber" }));
     } else {
       setCardNumberError("");
     }
@@ -36,7 +38,7 @@ export function CreditCard() {
     value = value.slice(0, 3);
     setCvc(value);
     if (value.length < 3) {
-      setCvcError("გთხოვთ შეიყვანოთ CVC");
+      setCvcError(formatMessage({ id: "cardcvc" }));
     } else {
       setCvcError("");
     }
@@ -48,7 +50,7 @@ export function CreditCard() {
     const value = event.target.value;
     setCardholder(value);
     if (!value.trim()) {
-      setCardholderError("გთხოვთ შეიყვანოთ სახელი და გვარი ");
+      setCardholderError(formatMessage({ id: "cardname" }));
     } else {
       setCardholderError("");
     }
@@ -60,26 +62,26 @@ export function CreditCard() {
     let formValid = true;
 
     if (!cardNumber.trim() || cardNumber.replace(/\s/g, "").length < 16) {
-      setCardNumberError("გთხოვთ სწორად შეიყვანოთ ბარათის ნომერი");
+      setCardNumberError(formatMessage({ id: "cardnumber" }));
       formValid = false;
     } else {
       setCardNumberError("");
     }
     if (!cardholder.trim()) {
-      setCardholderError("გთხოვთ სწორად შეიყვანოთ სახელი და გვარი");
+      setCardholderError(formatMessage({ id: "cardname" }));
       formValid = false;
     } else {
       setCardholderError("");
     }
     if (!cvc.trim() || cvc.length < 3) {
-      setCvcError("გთხოვთ სწორად შეიყვანოთ CVC ");
+      setCvcError(formatMessage({ id: "cardcvc" }));
 
       formValid = false;
     } else {
       setCvcError("");
     }
     if (expiryMonth === "month" || expiryYear === "year") {
-      setCardNumberError("გთხოვთ აირჩიეთ თვე და წელი");
+      setCardNumberError(formatMessage({ id: "carddate" }));
       formValid = false;
     }
 
@@ -114,7 +116,7 @@ export function CreditCard() {
             color: "#FF9900",
           }}
         >
-          გადახდის დეტალები
+          <FormattedMessage id="paymentdetails" />
         </h1>
         <img style={{ width: "100%" }} src={Cards} alt="img" />
         <form onSubmit={handleSubmit}>
@@ -226,7 +228,7 @@ export function CreditCard() {
                 {cvcError && <div style={{ color: "red" }}>{cvcError}</div>}
                 <SubmitButton
                   type="submit"
-                  value="გადახდა"
+                  value={formatMessage({ id: "pay" })}
                   className="Submit"
                   style={{
                     padding: "12px 100px",
@@ -249,14 +251,16 @@ export function CreditCard() {
               background: "white",
               padding: "20px",
               borderRadius: "5px",
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.)",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.4)",
               paddingTop: "50px",
               paddingRight: "50px",
               paddingLeft: "50px",
               paddingBottom: "20px",
             }}
           >
-            <h1>გილოცავთ შენაძენს !</h1>
+            <h1>
+              <FormattedMessage id="congratulation" />
+            </h1>
 
             <img
               src={Order}
@@ -294,7 +298,7 @@ export function CreditCard() {
                   handlePurchase();
                 }}
               >
-                დახურვა
+                <FormattedMessage id="close" />
               </button>
             </div>
           </div>

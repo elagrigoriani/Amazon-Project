@@ -13,6 +13,7 @@ import {
 } from "./CartModal.styled";
 import { ICartProduct } from "../view/layouts/Navigation/shared/types";
 import { calculateTotal } from "../utils/cartUtils";
+import { FormattedMessage, useIntl } from "react-intl";
 
 type CartModalProp = {
   onCancel: () => void;
@@ -32,6 +33,7 @@ export function CartModal({
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalItems, setTotalItems] = useState<number>(0);
   const navigate = useNavigate();
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     getCartProducts();
@@ -51,8 +53,8 @@ export function CartModal({
     <Modal
       open={true}
       onCancel={onCancel}
-      okText="ყიდვა"
-      cancelText="გაუქმება"
+      okText={formatMessage({ id: "buy" })}
+      cancelText={formatMessage({ id: "cancel" })}
       okButtonProps={{
         style: {
           backgroundColor: "#FF9900",
@@ -72,6 +74,11 @@ export function CartModal({
         onCancel();
       }}
     >
+      <div style={{ margin: "auto", color: "#FF9900" }}>
+        <h1>
+          <FormattedMessage id="cart" />
+        </h1>
+      </div>
       {cartProducts?.map((product: ICartProduct, index: number) => {
         return (
           <CartProductRow key={index}>
@@ -97,7 +104,10 @@ export function CartModal({
                       </span>
                       <span>
                         <span style={{ color: "red" }}>
-                          <b>ფასდაკლება</b>
+                          <b>
+                            {" "}
+                            <FormattedMessage id="sale" />
+                          </b>
                         </span>{" "}
                         <b>{product.cartProduct.salePrice} ₾</b>
                       </span>
@@ -116,7 +126,11 @@ export function CartModal({
                     -
                   </Button>
                   <CartCount>
-                    {product.count} <span> ცალი </span>
+                    {product.count}{" "}
+                    <span>
+                      {" "}
+                      <FormattedMessage id="item" />
+                    </span>
                   </CartCount>
                   <Button
                     style={{ marginLeft: "5px", marginRight: "3px" }}
@@ -132,7 +146,7 @@ export function CartModal({
                     }}
                     onClick={() => removeFromCart(product.id, true)}
                   >
-                    წაშლა
+                    <FormattedMessage id="delete" />
                   </Button>
                 </CartButtonsWrapper>
               </CartProductDesc>
@@ -145,13 +159,14 @@ export function CartModal({
           className="SPrice"
           style={{ fontWeight: "bold", color: "#FF9900" }}
         >
-          პროდუქტების ჯამური ღირებულება: {totalPrice} ₾
+          <FormattedMessage id="productprice" />: {totalPrice} ₾
         </div>
         <div
           className="SPrice"
           style={{ fontWeight: "bold", color: "#FF9900" }}
         >
-          პროდუქტების ჯამური რაოდენობა: {totalItems} ცალი
+          <FormattedMessage id="productitem" />: {totalItems}{" "}
+          <FormattedMessage id="item" />
         </div>
       </div>
     </Modal>

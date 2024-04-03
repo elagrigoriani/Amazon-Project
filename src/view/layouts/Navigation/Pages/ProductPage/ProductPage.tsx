@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { IProducts } from "../../shared/types";
 import { useCart } from "../../../../../hooks/useCart";
 import axios from "axios";
+import { FormattedMessage } from "react-intl";
 
 export function ProductPage() {
   const [product, setProduct] = useState<IProducts | null>(null);
@@ -56,7 +57,7 @@ export function ProductPage() {
               </span>
               <span>
                 <span style={{ color: "red", marginLeft: "5px" }}>
-                  ფასდაკლება
+                  <FormattedMessage id="sale" />
                 </span>{" "}
                 {product.salePrice} ₾
               </span>
@@ -65,7 +66,7 @@ export function ProductPage() {
             <span style={{ marginBottom: "25px" }}>{product.price} ₾</span>
           )}
           <SProductPageAddToCart onClick={() => addToCart(product.id)}>
-            კალათაში დამატება
+            <FormattedMessage id="addToCart" />
           </SProductPageAddToCart>
         </SProductPagePrice>
       </SProductPageImage>

@@ -15,10 +15,10 @@ import Tiktok from "../../../../images/tiktok.png";
 import Language from "../../../../images/language.png";
 import { useContext } from "react";
 import { LocaleContext } from "../../../../provider/LocaleProvider/LocaleContext";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
+import { SBut } from "../PrevFooter/SPrevFooter.styled";
 
 export function Footer() {
-  const { formatMessage } = useIntl();
   const { toggleLocale } = useContext(LocaleContext);
   return (
     <SBackground>
@@ -177,9 +177,17 @@ export function Footer() {
               marginRight: "5px",
             }}
           />
-          <button onClick={() => toggleLocale()}>
-            <FormattedMessage id="change.language" />
-          </button>
+          <SBut>
+            <button
+              className="cart-button"
+              onClick={() => toggleLocale()}
+              style={{
+                color: "white",
+              }}
+            >
+              <FormattedMessage id="change.language" />
+            </button>
+          </SBut>
         </SSocial>
       </SLanguage>
     </SBackground>

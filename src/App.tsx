@@ -19,10 +19,16 @@ import { SearchResults } from "./view/Home/Search/SearchResults";
 import { CheckOut } from "./components/CheckOut";
 import { ProductPage } from "./view/layouts/Navigation/Pages/ProductPage";
 import { CreditCard } from "./components/CreditCard";
+import {
+  LocaleContext,
+  Locale_Enum,
+} from "./provider/LocaleProvider/LocaleContext";
+import { useContext } from "react";
 
 function App() {
   const location = useLocation();
   const showCarousel = location.pathname === "/";
+  const { locale } = useContext(LocaleContext);
 
   return (
     <>
@@ -37,13 +43,27 @@ function App() {
             path="/orders"
             element={<PrivateChild children={<Orders />} />}
           />
-          <Route path="/სმარტფონები" element={<Smartphone />} />
-          <Route path="/ლეპტოპები" element={<Laptop />} />
-          <Route path="/აუდიო" element={<Audio />} />
-          <Route path="/ფოტო | ვიდეო" element={<Photo />} />
-          <Route path="/გეიმინგი" element={<Gaming />} />
-          <Route path="/TV | მონიტორები" element={<TV />} />
-          <Route path="/ტაბები" element={<Tab />} />
+          {locale === Locale_Enum.EN ? (
+            <>
+              <Route path="/Smartphones" element={<Smartphone />} />
+              <Route path="/Laptops" element={<Laptop />} />
+              <Route path="/Audio" element={<Audio />} />
+              <Route path="/Photo|Video" element={<Photo />} />
+              <Route path="/Gaming" element={<Gaming />} />
+              <Route path="/TV|Monitors" element={<TV />} />
+              <Route path="/Tabs" element={<Tab />} />
+            </>
+          ) : (
+            <>
+              <Route path="/სმარტფონები" element={<Smartphone />} />
+              <Route path="/ლეპტოპები" element={<Laptop />} />
+              <Route path="/აუდიო" element={<Audio />} />
+              <Route path="/ფოტო | ვიდეო" element={<Photo />} />
+              <Route path="/გეიმინგი" element={<Gaming />} />
+              <Route path="/TV | მონიტორები" element={<TV />} />
+              <Route path="/ტაბები" element={<Tab />} />
+            </>
+          )}
           <Route path="/" element={<SearchResults />} />
           <Route path="/purchases" element={<CheckOut />} />
           <Route path="/productpage/:productId" element={<ProductPage />} />

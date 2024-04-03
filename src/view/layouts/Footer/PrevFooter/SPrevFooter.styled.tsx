@@ -34,3 +34,17 @@ export const SLink = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const SBut = styled.div`
+  .cart-button {
+    background-color: #141920;
+    padding: 5px;
+    border: 1px solid #141920;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .cart-button:hover {
+    border: 1px solid #fff;
+  }
+`;

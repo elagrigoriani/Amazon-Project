@@ -1,6 +1,7 @@
 import { ILikeProduct } from "../view/layouts/Navigation/shared/types";
 import { useEffect } from "react";
 import { Modal, Button } from "antd";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import {
   CartProductDesc,
@@ -25,6 +26,8 @@ export function LikeModal({
   removeFromLike,
   getLikeProducts,
 }: LikeModalProp) {
+  const { formatMessage } = useIntl();
+
   useEffect(() => {
     getLikeProducts();
   }, []);
@@ -38,7 +41,7 @@ export function LikeModal({
       open={true}
       onCancel={onCancel}
       okText="OK"
-      cancelText="გაუქმება"
+      cancelText={formatMessage({ id: "cancel" })}
       okButtonProps={{
         style: {
           backgroundColor: "#FF9900",
@@ -55,7 +58,10 @@ export function LikeModal({
       }}
     >
       <div style={{ margin: "auto", color: "#FF9900" }}>
-        <h1>მოწონებული პროდუქტები</h1>
+        <h1>
+          {" "}
+          <FormattedMessage id="likedproducts" />
+        </h1>
       </div>
       {likeProducts?.map((product: ILikeProduct, index: number) => (
         <div key={index}>
@@ -85,7 +91,10 @@ export function LikeModal({
                             </span>
                             <span>
                               <span style={{ color: "red" }}>
-                                <b>ფასდაკლება</b>
+                                <b>
+                                  {" "}
+                                  <FormattedMessage id="sale" />
+                                </b>
                               </span>{" "}
                               <b>{product.likedProduct.salePrice} ₾</b>
                             </span>
@@ -105,7 +114,7 @@ export function LikeModal({
                         }}
                         onClick={() => removeFromLike(product.id, true)}
                       >
-                        წაშლა
+                        <FormattedMessage id="delete" />
                       </Button>
                     </CartProductPrice>
                   </CartProductDesc>

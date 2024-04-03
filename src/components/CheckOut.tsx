@@ -13,6 +13,7 @@ import {
 } from "./CartModal.styled";
 import { useNavigate } from "react-router-dom";
 import { calculateTotal } from "../utils/cartUtils";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export function CheckOut() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export function CheckOut() {
   const [address, setAddress] = useState<string>("");
   const [error, setError] = useState<string>("");
   const deliveryPrice = 5;
+  const { formatMessage } = useIntl();
 
   console.log("testt", cartProducts);
 
@@ -35,7 +37,7 @@ export function CheckOut() {
 
   const handlePurchase = () => {
     if (!address) {
-      setError("გთხოვთ შეიყვანოთ მისამართი");
+      setError(formatMessage({ id: "addresserror" }));
       return;
     }
     fetch("http://localhost:3000/purchases", {
@@ -72,7 +74,10 @@ export function CheckOut() {
         paddingTop: "20px",
       }}
     >
-      <h2 style={{ marginLeft: "20px", color: "#FF9900" }}>ყიდვის გვერდი</h2>
+      <h2 style={{ marginLeft: "20px", color: "#FF9900" }}>
+        {" "}
+        <FormattedMessage id="checkout" />
+      </h2>
       {cartProducts ? (
         cartProducts.map((product: ICartProduct, index: number) => (
           <div key={index}>
@@ -106,7 +111,10 @@ export function CheckOut() {
                         </span>
                         <span>
                           <span style={{ color: "red" }}>
-                            <b>ფასდაკლება</b>
+                            <b>
+                              {" "}
+                              <FormattedMessage id="sale" />
+                            </b>
                           </span>{" "}
                           <b>{product.cartProduct.salePrice} ₾</b>
                         </span>
@@ -119,7 +127,11 @@ export function CheckOut() {
                   </CartProductPrice>
                   <CartButtonsWrapper>
                     <CartCount>
-                      {product.count} <span> ცალი </span>
+                      {product.count}{" "}
+                      <span>
+                        {" "}
+                        <FormattedMessage id="item" />
+                      </span>
                     </CartCount>
                   </CartButtonsWrapper>
                 </CartProductDesc>
@@ -128,7 +140,10 @@ export function CheckOut() {
           </div>
         ))
       ) : (
-        <p>არ არის პროდუქტები</p>
+        <p>
+          {" "}
+          <FormattedMessage id="noproducts" />
+        </p>
       )}
       <div
         style={{
@@ -139,9 +154,9 @@ export function CheckOut() {
         }}
       >
         <div style={{ marginBottom: "10px" }}>
-          მისამართი:{" "}
+          <FormattedMessage id="address" />:{" "}
           <input
-            placeholder="მისამართი"
+            placeholder={formatMessage({ id: "address" })}
             style={{ borderRadius: "5px", padding: "3px", width: "80%" }}
             value={address}
             onChange={(e) => setAddress(e.target.value)}
@@ -156,8 +171,14 @@ export function CheckOut() {
           }}
         >
           <div style={{ textAlign: "left", lineHeight: "30px" }}>
-            <p>პროდუქტები საერთო ღირებულება:</p>
-            <p>ადგილზე მოტანის ღირებულება:</p>
+            <p>
+              {" "}
+              <FormattedMessage id="productprice" />:
+            </p>
+            <p>
+              {" "}
+              <FormattedMessage id="shippingprice" />:
+            </p>
           </div>
           <div
             style={{
@@ -174,7 +195,10 @@ export function CheckOut() {
             </p>
             <p>
               <b style={{ fontSize: "20px" }}>
-                <span style={{ color: "#ff9900" }}>ჯამი:</span>{" "}
+                <span style={{ color: "#ff9900" }}>
+                  {" "}
+                  <FormattedMessage id="total" />:
+                </span>{" "}
                 {totalPrice + deliveryPrice} ₾
               </b>
             </p>
@@ -204,7 +228,7 @@ export function CheckOut() {
             }}
             onClick={() => handlePurchase()}
           >
-            ყიდვა
+            <FormattedMessage id="buy" />
           </button>
         </div>
       </div>

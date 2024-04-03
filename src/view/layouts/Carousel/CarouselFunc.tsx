@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
+import { FormattedMessage } from "react-intl";
 
 export function CarouselFunc() {
   const [products, setProducts] = useState<IProducts[]>([]);
@@ -90,7 +91,10 @@ export function CarouselFunc() {
             marginBottom: "10px",
           }}
         >
-          <h1>ფასდაკლებული პროდუქტები</h1>
+          <h1>
+            {" "}
+            <FormattedMessage id="saleproducts" />
+          </h1>
         </div>
         <Swiper
           spaceBetween={30}
@@ -118,7 +122,10 @@ export function CarouselFunc() {
                           <s>{product.price} ₾</s>
                         </span>
                         <span>
-                          <span style={{ color: "red" }}>ფასდაკლება</span>{" "}
+                          <span style={{ color: "red" }}>
+                            {" "}
+                            <FormattedMessage id="sale" />
+                          </span>{" "}
                           {product.salePrice} ₾
                         </span>
                       </>
@@ -127,7 +134,7 @@ export function CarouselFunc() {
                       <div style={{ display: "flex" }}>
                         <div>
                           <button onClick={() => addToCart(product.id)}>
-                            კალათაში დამატება
+                            <FormattedMessage id="addToCart" />
                           </button>{" "}
                         </div>
                         <div>
