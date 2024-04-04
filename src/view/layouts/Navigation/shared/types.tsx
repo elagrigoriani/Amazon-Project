@@ -1,7 +1,9 @@
 export type ICategories = {
   created_at: string;
   id: string;
+  image: string;
   name: string;
+  nameEng?: string;
   updated_at: string;
 };
 

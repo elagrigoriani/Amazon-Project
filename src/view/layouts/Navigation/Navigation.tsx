@@ -9,7 +9,7 @@ import {
 } from "../../../provider/LocaleProvider/LocaleContext";
 
 export function Navigation() {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<Array<ICategories>>([]);
   const navigate = useNavigate();
   const { locale } = useContext(LocaleContext);
 
@@ -23,35 +23,30 @@ export function Navigation() {
     getCategories();
   }, []);
 
-  const categoriess = [
-    { id: 1, name: "Smartphones" },
-    { id: 2, name: "Laptops" },
-    { id: 3, name: "Audio" },
-    { id: 4, name: "Photo|Video" },
-    { id: 5, name: "Gaming" },
-    { id: 6, name: "TV|Monitors" },
-    { id: 7, name: "Tabs" },
+  const categoriesEng = [
+    { nameEng: "Smartphones" },
+    { nameEng: "Laptops" },
+    { nameEng: "Audio" },
+    { nameEng: "Photo|Video" },
+    { nameEng: "Gaming" },
+    { nameEng: "TV|Monitors" },
+    { nameEng: "Tabs" },
   ];
+
+  const categoriesToShow = categories.map(
+    (obj: ICategories, index: number) => ({
+      ...obj,
+      ...categoriesEng[index],
+    })
+  );
 
   return (
     <SNav>
-      {locale === Locale_Enum.EN
-        ? categoriess.map((category: any) => (
-            <SCat
-              key={category.id}
-              onClick={() => navigate(`/${category.name}`)}
-            >
-              {category.name}
-            </SCat>
-          ))
-        : categories.map((category: ICategories) => (
-            <SCat
-              key={category.id}
-              onClick={() => navigate(`/${category.name}`)}
-            >
-              {category.name}
-            </SCat>
-          ))}
+      {categoriesToShow.map((item: ICategories, index: number) => (
+        <SCat key={index} onClick={() => navigate(`/${item.nameEng}`)}>
+          {locale === Locale_Enum.EN ? item.nameEng : item.name}
+        </SCat>
+      ))}
     </SNav>
   );
 }
