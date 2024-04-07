@@ -55,10 +55,13 @@ export function TV() {
   }
 
   const sortedProducts = [...products].sort((a, b) => {
+    const aPrice = a.salePrice !== null ? a.salePrice : a.price;
+    const bPrice = b.salePrice !== null ? b.salePrice : b.price;
+
     if (sortBy === "lowestToHighest") {
-      return a.price - b.price;
+      return aPrice - bPrice;
     } else {
-      return b.price - a.price;
+      return bPrice - aPrice;
     }
   });
 
