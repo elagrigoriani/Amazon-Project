@@ -15,7 +15,7 @@ import { Tab } from "./view/layouts/Navigation/Pages/Tab";
 import { TV } from "./view/layouts/Navigation/Pages/TV";
 import { Gaming } from "./view/layouts/Navigation/Pages/Gaming";
 import { Audio } from "./view/layouts/Navigation/Pages/Audio";
-import { SearchResults } from "./view/Home/Search/SearchResults";
+// import { SearchResults } from "./view/Home/Search/SearchResults";
 import { CheckOut } from "./components/CheckOut";
 import { ProductPage } from "./view/layouts/Navigation/Pages/ProductPage";
 import { CreditCard } from "./components/CreditCard";
@@ -52,7 +52,7 @@ function App() {
           <Route path="/TV|Monitors" element={<TV />} />
           <Route path="/Tabs" element={<Tab />} />
 
-          <Route path="/" element={<SearchResults />} />
+          {/* <Route path="/" element={<SearchResults />} /> */}
           <Route path="/purchases" element={<CheckOut />} />
           <Route path="/productpage/:productId" element={<ProductPage />} />
           <Route path="/creditcard" element={<CreditCard />} />

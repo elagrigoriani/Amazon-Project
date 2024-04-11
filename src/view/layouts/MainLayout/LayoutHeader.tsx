@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../images/logo.png";
 import cartImage from "../../../images/cart.png";
@@ -11,7 +11,7 @@ import { SignUpModal } from "../../../modules/SignUpModal";
 import { useAuthProvider } from "../../../provider/AuthProvider";
 import { TAuthorizationStage_Enum } from "../../../provider/AuthProvider/AuthContext";
 import { composeAvatarName } from "../../../utils/composeAvatarName";
-import { Search } from "../../Home/Search/Search";
+// import { Search } from "../../Home/Search/Search";
 import { Navigation } from "../Navigation";
 import { CartModal } from "../../../components/CartModal";
 import { useCart } from "../../../hooks/useCart";
@@ -22,7 +22,8 @@ import { Avatar, Button, ConfigProvider, Popover, Space } from "antd";
 import { LikeModal } from "../../../components/LikeModal";
 import { useContext } from "react";
 import { LocaleContext } from "../../../provider/LocaleProvider/LocaleContext";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
+import { LiveSearch } from "../../Home/Search/LiveSearch";
 
 export function LayoutHeader() {
   const { authStage, userData, logout } = useAuthProvider();
@@ -35,9 +36,11 @@ export function LayoutHeader() {
     useCart();
   const { likeProducts, addToLike, removeFromLike, getLikeProducts } =
     useLike();
-  const { formatMessage } = useIntl();
-  const { toggleLocale } = useContext(LocaleContext);
 
+  const { toggleLocale } = useContext(LocaleContext);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div>
       <SLayoutHeader>
@@ -72,7 +75,8 @@ export function LayoutHeader() {
         </button>
         <div style={{ width: "65%", marginTop: "5px" }}>
           {" "}
-          <Search />
+          {/* <Search /> */}
+          <LiveSearch />
         </div>
         <div>
           {showCartModal && (
@@ -197,6 +201,7 @@ export function LayoutHeader() {
           getLikeProducts={getLikeProducts}
         />
       )}
+
       <Navigation />
     </div>
   );

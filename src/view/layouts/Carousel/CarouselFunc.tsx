@@ -1,5 +1,5 @@
 import { Carousel } from "antd";
-import { SCarouselFunc } from "./SCarouselFunc";
+import { SCarouselFunc } from "./SCarouselFunc.styled";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IProducts } from "../Navigation/shared/types";
