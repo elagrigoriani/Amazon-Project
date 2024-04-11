@@ -4,6 +4,7 @@ export const SSearch = styled.div`
   width: 90%;
   border-radius: 5px;
   padding: 5px;
+  border: 1px solid black;
 
   input {
     border-radius: 5px;
@@ -18,6 +19,22 @@ export const SSearch = styled.div`
       border: 2px solid #f4bf76;
       box-shadow: 0 0 5px rgba(244, 191, 118, 0.5);
     }
+  }
+  .scroll-container::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .scroll-container::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb {
+    background-color: #f4bf71;
+    border-radius: 5px;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: #ff9900;
   }
 `;
 export const SSearchProducts = styled.div`

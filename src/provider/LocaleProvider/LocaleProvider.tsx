@@ -1,4 +1,3 @@
-// LocaleProvider.tsx
 import { IntlProvider } from "react-intl";
 import { PropsWithChildren, useState, useEffect } from "react";
 import { LocaleContext, Locale_Enum } from "./LocaleContext";
@@ -39,4 +38,4 @@ export function LocaleProvider({ children }: PropsWithChildren) {
   );
 }
 
-export default LocaleProvider; // экспортируем компонент по умолчанию
+export default LocaleProvider;

@@ -11,6 +11,7 @@ export function LiveSearch() {
   const navigate = useNavigate();
   const { formatMessage } = useIntl();
   const [scrollable, setScrollable] = useState(false);
+  const [showScrollContainer, setShowScrollContainer] = useState(true);
 
   useEffect(() => {
     getProducts();
@@ -20,6 +21,7 @@ export function LiveSearch() {
   const handlePurchase = (productId: string) => {
     navigate(`/productpage/${productId}`);
     window.scrollTo(0, 0);
+    setShowScrollContainer(false);
   };
 
   async function getProducts() {
@@ -45,16 +47,22 @@ export function LiveSearch() {
     setScrollable(filteredProducts.length > 5);
   }, [filteredProducts]);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setShowScrollContainer(true); // Set showScrollContainer to true when input value changes
+  };
+
   return (
     <SSearch>
       <input
         type="text"
         placeholder={formatMessage({ id: "search.placeholder" })}
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={handleInputChange}
       />
-      {searchTerm !== "" && (
+      {searchTerm !== "" && showScrollContainer && (
         <div
+          className="scroll-container"
           style={{
             backgroundColor: "white",
             position: "absolute",
@@ -63,6 +71,7 @@ export function LiveSearch() {
             padding: "5px",
             borderRadius: "5px",
             marginTop: "5px",
+            border: "1px solid lightgray",
             overflowY: scrollable ? "scroll" : "hidden",
             maxHeight: scrollable ? "300px" : "auto",
           }}
