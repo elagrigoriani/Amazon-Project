@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 export const SSearch = styled.div`
-  width: 90%;
+  width: 100%;
   border-radius: 5px;
   padding: 5px;
-  border: 1px solid black;
 
   input {
     border-radius: 5px;
@@ -38,7 +37,7 @@ export const SSearch = styled.div`
   }
 `;
 export const SSearchProducts = styled.div`
-  border: 1px solid black;
+  border: 1px solid lightgray;
   padding: 5px;
   margin-top: 5px;
   cursor: pointer;

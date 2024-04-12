@@ -49,7 +49,7 @@ export function LiveSearch() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    setShowScrollContainer(true); // Set showScrollContainer to true when input value changes
+    setShowScrollContainer(true);
   };
 
   return (
@@ -67,7 +67,7 @@ export function LiveSearch() {
             backgroundColor: "white",
             position: "absolute",
             zIndex: "3",
-            width: "56.7%",
+            width: "63%",
             padding: "5px",
             borderRadius: "5px",
             marginTop: "5px",
@@ -76,45 +76,51 @@ export function LiveSearch() {
             maxHeight: scrollable ? "300px" : "auto",
           }}
         >
-          {filteredProducts.map((product: IProducts) => (
-            <SSearchProducts
-              onClick={() => handlePurchase(product.id)}
-              key={product.id}
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <div>
-                <img
-                  src={product.image}
-                  alt="img"
-                  style={{
-                    width: "35px",
-                    marginTop: "5px",
-                    display: "flex",
-                    marginRight: "5px",
-                  }}
-                />
-              </div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div>{product.description}</div>
+          {filteredProducts.length === 0 ? (
+            <div style={{ textAlign: "center" }}>
+              <FormattedMessage id="empty" />
+            </div>
+          ) : (
+            filteredProducts.map((product: IProducts) => (
+              <SSearchProducts
+                onClick={() => handlePurchase(product.id)}
+                key={product.id}
+                style={{ display: "flex", alignItems: "center" }}
+              >
                 <div>
-                  {product.salePrice ? (
-                    <>
-                      <span style={{ color: "black" }}>
-                        <s>{product.price} ₾</s>
-                      </span>
-                      <span style={{ color: "red" }}>
-                        {" "}
-                        <FormattedMessage id="sale" />
-                      </span>{" "}
-                      {product.salePrice} ₾
-                    </>
-                  ) : (
-                    <div>{product.price} ₾</div>
-                  )}
+                  <img
+                    src={product.image}
+                    alt="img"
+                    style={{
+                      width: "35px",
+                      marginTop: "5px",
+                      display: "flex",
+                      marginRight: "5px",
+                    }}
+                  />
                 </div>
-              </div>
-            </SSearchProducts>
-          ))}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div>{product.description}</div>
+                  <div>
+                    {product.salePrice ? (
+                      <>
+                        <span style={{ color: "black" }}>
+                          <s>{product.price} ₾</s>
+                        </span>
+                        <span style={{ color: "red" }}>
+                          {" "}
+                          <FormattedMessage id="sale" />
+                        </span>{" "}
+                        {product.salePrice} ₾
+                      </>
+                    ) : (
+                      <div>{product.price} ₾</div>
+                    )}
+                  </div>
+                </div>
+              </SSearchProducts>
+            ))
+          )}
         </div>
       )}
     </SSearch>

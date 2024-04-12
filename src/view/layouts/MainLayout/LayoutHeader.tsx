@@ -141,7 +141,6 @@ export function LayoutHeader() {
                       <Button
                         onClick={() => {
                           navigate("/profile");
-                          toggleLocale();
                         }}
                         style={{ marginBottom: "5px" }}
                       >

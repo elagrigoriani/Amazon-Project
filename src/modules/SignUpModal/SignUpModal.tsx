@@ -57,7 +57,9 @@ export function SignUpModal({ onCancel }: SignUpModalProps) {
           form="signup"
           type="primary"
           htmlType="submit"
-          style={{ backgroundColor: "#FF9900" }}
+          style={{
+            backgroundColor: "#FF9900",
+          }}
         >
           <FormattedMessage id="signup" />
         </Button>

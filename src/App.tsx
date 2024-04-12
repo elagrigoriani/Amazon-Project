@@ -25,6 +25,7 @@ function App() {
   const location = useLocation();
   const showCarousel = location.pathname === "/";
   const { locale } = useContext(LocaleContext);
+  console.log(locale);
 
   return (
     <>

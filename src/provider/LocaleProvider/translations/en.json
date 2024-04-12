@@ -51,5 +51,6 @@
   "orderhistoryempy": "Order History is Empty",
   "saleproducts": "Special Offer",
   "editprofile": "Edit Profile",
-  "edit": "Edit"
+  "edit": "Edit",
+  "empty": "Sorry, the product was not found"
 }
