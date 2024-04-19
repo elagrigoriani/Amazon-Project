@@ -1,9 +1,7 @@
-import { Home } from "./view/Home";
-import { Profile } from "./view/Profile";
-import { Orders } from "./view/Home/Orders";
-import { MainLayout } from "./view/layouts/MainLayout";
+import React, { useState, useEffect, useContext } from "react"; // Импорт useEffect и useState
 import { Routes, Route, useLocation } from "react-router-dom";
-
+import { LocaleContext } from "./provider/LocaleProvider/LocaleContext";
+import { MainLayout } from "./view/layouts/MainLayout";
 import { PrivateChild } from "./modules/PrivateRoute";
 import { PrevFooter } from "./view/layouts/Footer/PrevFooter";
 import { Footer } from "./view/layouts/Footer/Footer";
@@ -18,14 +16,30 @@ import { Audio } from "./view/layouts/Navigation/Pages/Audio";
 import { CheckOut } from "./components/CheckOut";
 import { ProductPage } from "./view/layouts/Navigation/Pages/ProductPage";
 import { CreditCard } from "./components/CreditCard";
-import { LocaleContext } from "./provider/LocaleProvider/LocaleContext";
-import { useContext } from "react";
+import { Home } from "./view/Home";
+import { Profile } from "./view/Profile";
+import { Orders } from "./view/Home/Orders";
+import { useIntl } from "react-intl";
 
 function App() {
   const location = useLocation();
   const showCarousel = location.pathname === "/";
   const { locale } = useContext(LocaleContext);
+  const { formatMessage } = useIntl();
+
   console.log(locale);
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    document.body.style.backgroundColor = darkMode
+      ? "var(--dark-background-color)"
+      : "var(--light-background-color)";
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   return (
     <>
@@ -54,6 +68,15 @@ function App() {
           <Route path="/creditcard" element={<CreditCard />} />
         </Route>
       </Routes>
+
+      <button
+        onClick={toggleDarkMode}
+        style={{ color: "#FF9900", margin: "5px" }}
+      >
+        {darkMode
+          ? formatMessage({ id: "light" })
+          : formatMessage({ id: "dark" })}
+      </button>
 
       {showCarousel && <CarouselFunc />}
       <PrevFooter />

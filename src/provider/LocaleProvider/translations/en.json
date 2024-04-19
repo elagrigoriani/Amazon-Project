@@ -52,5 +52,8 @@
   "saleproducts": "Special Offer",
   "editprofile": "Edit Profile",
   "edit": "Edit",
-  "empty": "Sorry, the product was not found"
+  "empty": "Sorry, the product was not found",
+  "similarproducts": "Similar Products",
+  "light": "Switch to Light Mode",
+  "dark": "Switch to Dark Mode"
 }
