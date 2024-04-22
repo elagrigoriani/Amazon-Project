@@ -11,18 +11,18 @@ import { SignUpModal } from "../../../modules/SignUpModal";
 import { useAuthProvider } from "../../../provider/AuthProvider";
 import { TAuthorizationStage_Enum } from "../../../provider/AuthProvider/AuthContext";
 import { composeAvatarName } from "../../../utils/composeAvatarName";
-// import { Search } from "../../Home/Search/Search";
 import { Navigation } from "../Navigation";
 import { CartModal } from "../../../components/CartModal";
 import { useCart } from "../../../hooks/useCart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+
 import { useLike } from "../../../hooks/useLike";
 import { Avatar, Button, ConfigProvider, Popover, Space } from "antd";
 import { LikeModal } from "../../../components/LikeModal";
 import { useContext } from "react";
 import { LocaleContext } from "../../../provider/LocaleProvider/LocaleContext";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { LiveSearch } from "../../Home/Search/LiveSearch";
 
 export function LayoutHeader() {
@@ -38,9 +38,21 @@ export function LayoutHeader() {
     useLike();
 
   const { toggleLocale } = useContext(LocaleContext);
+  const [darkMode, setDarkMode] = useState(false);
+  const { formatMessage } = useIntl();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  useEffect(() => {
+    document.body.style.backgroundColor = darkMode
+      ? "var(--dark-background-color)"
+      : "var(--light-background-color)";
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
   return (
     <div>
       <SLayoutHeader>
@@ -73,11 +85,36 @@ export function LayoutHeader() {
         >
           <FormattedMessage id="change.language" />
         </button>
-        <div style={{ width: "65%", marginTop: "5px" }}>
+
+        <div style={{ width: "45%", marginTop: "5px" }}>
           {" "}
-          {/* <Search /> */}
           <LiveSearch />
         </div>
+        <button
+          onClick={toggleDarkMode}
+          style={{ color: "#fff", margin: "5px" }}
+        >
+          {darkMode ? (
+            <FontAwesomeIcon
+              className="cart-button"
+              icon={faSun}
+              style={{
+                color: "white",
+                padding: "8px",
+              }}
+            />
+          ) : (
+            <FontAwesomeIcon
+              className="cart-button"
+              icon={faMoon}
+              style={{
+                color: "white",
+                padding: "8px",
+                marginLeft: "5px",
+              }}
+            />
+          )}
+        </button>
         <div>
           {showCartModal && (
             <CartModal

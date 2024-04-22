@@ -23,7 +23,6 @@ export function Audio() {
   const { likeProducts, addToLike } = useLike();
   const navigate = useNavigate();
   console.log(cartProducts, likeProducts);
-
   const itemsPerPage = 12;
   const [sortBy, setSortBy] = useState<"lowestToHighest" | "highestToLowest">(
     "lowestToHighest"
@@ -31,8 +30,16 @@ export function Audio() {
 
   useEffect(() => {
     getProducts("აუდიო");
-    window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
+  const handlePurchase = (productId: string) => {
+    navigate(`/productpage/${productId}`);
+    window.scrollTo(0, 0);
+  };
 
   async function getProducts(categoryName: string) {
     try {
@@ -50,11 +57,6 @@ export function Audio() {
       console.error("Error", error);
     }
   }
-
-  const handlePurchase = (productId: string) => {
-    navigate(`/productpage/${productId}`);
-    window.scrollTo(0, 0);
-  };
 
   const sortedProducts = [...products].sort((a, b) => {
     const aPrice = a.salePrice !== null ? a.salePrice : a.price;
@@ -98,7 +100,6 @@ export function Audio() {
       <div>
         <label style={{ margin: "5px" }}>
           <FormattedMessage id="filter" />
-
           <select
             style={{
               padding: "5px",

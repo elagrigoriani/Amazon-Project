@@ -1,4 +1,3 @@
-// useCart.js
 import { useState } from "react";
 import { privateAxios } from "../../utils/privateAxios";
 import { ICartProduct } from "../../view/layouts/Navigation/shared/types";

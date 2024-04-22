@@ -52,10 +52,3 @@ export const CartButtonsWrapper = styled.div`
 export const CartCount = styled.div`
   display: inline-block;
 `;
-
-// export const CheckOutWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   text-align: center;
-// `;

@@ -3,6 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-  --light-background-color: #ffffff; /* Светлый фон */
-  --dark-background-color: #131a22; /* Темный фон */
+  --light-background-color: #ffffff;
+  --dark-background-color: #131a22;
 }
